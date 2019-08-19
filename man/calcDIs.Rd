@@ -12,3 +12,7 @@ calcDIs(files)
 \description{
 Calculate Phenotypic Decline Index (PDI) and Decline Acuteness Index from phenotypic descriptors.
 }
+\examples{
+files <- list.files(system.file('phenotypeDataCollectionSheets',package = 'pdi'),full.names = TRUE)
+DIs <- calcDIs(files)
+}

@@ -16,7 +16,3 @@ Imports: dplyr,
         tidyr
 LazyData: true
 RoxygenNote: 6.1.1
-Suggests: 
-    knitr,
-    rmarkdown
-VignetteBuilder: knitr

@@ -5,6 +5,9 @@
 #' @importFrom magrittr %>%
 #' @importFrom purrr map
 #' @importFrom dplyr bind_cols
+#' @examples 
+#' files <- list.files(system.file('phenotypeDataCollectionSheets',package = 'pdi'),full.names = TRUE)
+#' DIs <- calcDIs(files)
 #' @export
 
 calcDIs <- function(files){
