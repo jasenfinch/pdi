@@ -1,0 +1,11 @@
+language: R
+cache: packages
+
+after_success:
+    - Rscript -e 'covr::codecov()'
+    
+notifications:
+  slack:
+    rooms: SGL5GeMVjYQem/lRKHqdGBECj64JlR9rOIBMbhC0Zxd4vbpQvz7QhPSzaWRxe78ga6RYXfYaoe3cZz3U3XjLnyvzDtrjGsnWUq1ihEhYWNmhU8DpMMnk1ecnswoWvWXQF6LJ0oFtnY8BmmH/3i9hgaoOMPDTPUoJHzo5GHGKPv62xsBOsSpvXCTptz6BaL3Cbdnt/2CNWWAI1PUvnkkCnPkeYmoZ0nqH1Unngxsm9WwXu4flQpLxt2Lej0dlaCr1t1O7cV8Hn8DONzb9t9VWAlI9hZxeSCqyCQVXEBwoHtk2rOO0DMrxClCc2uBDYoCcrvrc/jlyGNeac+TYKdg675P4svMWjaOm6pQfQrg6QvwSLOEY35ztwQMhk1ti/JULiFVudA0oKXQbH+9YP+zz3V7Vd+nsh9KMusPwR2Y62bsG4FDc4LxpRFHlG3GT4XNMgIzZ2GUpg7hx8XxNr2Wff3yL06qN1qg4a+NcaS2+5ySIy5nHb0Pj6FPkAjPc5rZwVfgGlz0khc0kR4nFIPYphIDA++I9+Z2/bIkq0Q+bcZoeGpMHuHLYrmztCnLsKNvJC/Tk6lDcQ2iLmV5TkoKWoyJ8syvwZbdiWs8PkqPXypkdBoKlnge9waVho0nGyv0t+Mx85zXl8h/2lCOtUHBqZQo8ZUvdzVMzop/W8pDqODc=
+  on_success: change
+  on_failure: change
