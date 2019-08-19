@@ -1,11 +1,13 @@
+#' Calculate Decline Indexes
+#' @description Calculate Phenotypic Decline Index (PDI) and Decline Acuteness Index from phenotypic descriptors.
+#' @param files vector of file paths to phenotype data collection sheets (.xlsx) 
 #' @importFrom purrr map_chr
-#' @importFrom readr read_csv
 #' @importFrom magrittr %>%
 #' @importFrom purrr map
 #' @importFrom dplyr bind_cols
 #' @export
 
-calcDIs <- function(files,seed = 1234){
+calcDIs <- function(files){
   
   phenoData <- files %>%
     map(readPhenotypeSheet)
@@ -52,7 +54,7 @@ calcDIs <- function(files,seed = 1234){
   
   correctedAnalysisTable <- makeAnalysisTable(correctedPhenoData)
   
-  set.seed(seed)
+  set.seed(1234)
   
   unsupervisedRF <- rf(correctedAnalysisTable,NULL,100)
   

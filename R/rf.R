@@ -8,6 +8,7 @@ rf <- function(analysisTable, cls, nreps = 100, seed = 1234){
 }
 
 #' @importFrom tibble as_tibble
+#' @importFrom stats cmdscale
 
 mds <- function(rfModels){
   rfModels %>%

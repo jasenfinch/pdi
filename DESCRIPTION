@@ -6,18 +6,16 @@ Authors@R: person("Jasen", "Finch", email = "jsf9@aber.ac.uk", role = c("aut", "
 Description: Calculation of phenotypic decline indexes using visual descriptors.
 License: GPL-3
 Encoding: UTF-8
+Imports: dplyr,
+        magrittr,
+        purrr,
+        randomForest,
+        readxl,
+        stringr,
+        tibble,
+        tidyr
 LazyData: true
 RoxygenNote: 6.1.1
-Imports: dplyr,
-  randomForest,
-  magrittr,
-  purrr,
-  stringr,
-  tidyr,
-  readxl,
-  tibble,
-  ggplot2,
-  ggthemes
 Suggests: 
     knitr,
     rmarkdown
