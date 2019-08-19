@@ -1,0 +1,24 @@
+Package: pdi
+Type: Package
+Title: Phenotypic Indexes Measures For Oak Decline Severity
+Version: 0.2.0
+Authors@R: person("Jasen", "Finch", email = "jsf9@aber.ac.uk", role = c("aut", "cre"))
+Description: Calculation of phenotypic decline indexes using visual descriptors.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Imports: dplyr,
+  randomForest,
+  magrittr,
+  purrr,
+  stringr,
+  tidyr,
+  readxl,
+  tibble,
+  ggplot2,
+  ggthemes
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
