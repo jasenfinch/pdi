@@ -1,4 +1,10 @@
-siteCorrectionFactors <- function(phenoData,descriptors = c("Diameter at breast height (cm)",
+#' siteCorrectionFactors
+#' @description return site correction correction factors of selected descriptors
+#' @param phenoData phenoData tibble containing phenotype data
+#' @param descriptors columns of phenoData on which calculate site correction factors
+#' @export
+
+siteCorrectionFactors <- function(phenoData,descriptors = c("Diameter at breast height (mm)",
                                                             "Lower crown height (m)",
                                                             "Timber height (m)",
                                                             "Total height (m)",
