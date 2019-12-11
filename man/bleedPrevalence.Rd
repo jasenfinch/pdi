@@ -2,7 +2,7 @@
 % Please edit documentation in R/additionalDescriptors.R
 \name{bleedPrevalence}
 \alias{bleedPrevalence}
-\title{Estimated bleed prevalence (%)}
+\title{Estimated bleed prevalence (\%)}
 \usage{
 bleedPrevalence(a, A, b, B, d, s = 3)
 }

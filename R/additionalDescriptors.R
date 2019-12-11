@@ -1,7 +1,7 @@
 #' Crown condition
-#' @description Calculate crown condition (%).
-#' @param m missing crown (%)
-#' @param t crown transparency (%)
+#' @description Calculate crown condition (\%).
+#' @param m missing crown (\%)
+#' @param t crown transparency (\%)
 #' @export
 
 crownCondition <- function(m,t) {
@@ -13,14 +13,14 @@ crownCondition <- function(m,t) {
 #' @param r crown radius (m)
 #' @param h total height (m)
 #' @param l lower crown height (m)
-#' @param c crown condition (%)
+#' @param c crown condition (\%)
 #' @export
 
 crownVolume <- function(r,h,l,c) {
   (pi * r ^ 2 * c * (h - l)) / 200
 }
 
-#' Estimated bleed prevalence (%)
+#' Estimated bleed prevalence (\%)
 #' @description Calculate estimated bleed prevalence.
 #' @param a average active bleed size (mm)
 #' @param A number of active bleeds

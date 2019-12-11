@@ -7,10 +7,10 @@
 crownCondition(m, t)
 }
 \arguments{
-\item{m}{missing crown (%)}
+\item{m}{missing crown (\%)}
 
-\item{t}{crown transparency (%)}
+\item{t}{crown transparency (\%)}
 }
 \description{
-Calculate crown condition (%).
+Calculate crown condition (\%).
 }

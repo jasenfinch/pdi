@@ -13,7 +13,7 @@ crownVolume(r, h, l, c)
 
 \item{l}{lower crown height (m)}
 
-\item{c}{crown condition (%)}
+\item{c}{crown condition (\%)}
 }
 \description{
 Calculate estimated crown volume.
