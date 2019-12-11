@@ -41,6 +41,6 @@ bleedPrevalence <- function(a,A,b,B,d,s = 3) {
 #' @param s height to which stem surveyed from the tree base (m)
 #' @export
 
-agrilusExitHoleDensity <- function(h,d,s) {
+agrilusExitHoleDensity <- function(h,d,s = 2) {
   h/((s * d)/1000 * pi)
 }
