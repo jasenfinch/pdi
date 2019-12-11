@@ -4,7 +4,7 @@
 \alias{agrilusExitHoleDensity}
 \title{Agrilus exit hole density (m^-2)}
 \usage{
-agrilusExitHoleDensity(h, d, s)
+agrilusExitHoleDensity(h, d, s = 2)
 }
 \arguments{
 \item{h}{number of Agrilus exit holes}

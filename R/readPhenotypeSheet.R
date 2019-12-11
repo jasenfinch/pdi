@@ -1,9 +1,13 @@
+#' readPhenotypeSheet
+#' @description parse .xls phenotype data collection sheets
+#' @param file file path to excel file to parse
 #' @importFrom readxl read_excel
 #' @importFrom tibble rowid_to_column
 #' @importFrom tidyr gather
 #' @importFrom stats na.omit
 #' @importFrom stringr str_replace_all
 #' @importFrom dplyr filter bind_rows select mutate
+#' @export
 
 readPhenotypeSheet <- function(file){
   suppressWarnings(suppressMessages(description <- read_excel(file,sheet = 'Description')))
@@ -23,7 +27,7 @@ readPhenotypeSheet <- function(file){
   description <- description[-1,]
   
   directionObservations <- description[,9:28]
-  description <- description[-1,-(9:29)]
+  description <- description[-1,-(9:28)]
   colnames(description) <- description[1,]
   description <- description[-1,]
   
