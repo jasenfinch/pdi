@@ -1,4 +1,11 @@
+#' rf
+#' @description perform random forest repetitions
+#' @param analysisTable tibble of phenotype data suitable for random forest analysis as returned by \code{preparePhenotypeData}
+#' @param cls analysisTable column to use as response vector. NULL for unsupervised analyses.
+#' @param nreps number of repetitions
+#' @param seed random number seed
 #' @importFrom randomForest randomForest
+#' @export
 
 rf <- function(analysisTable, cls, nreps = 100, seed = 1234){
   set.seed(seed)
