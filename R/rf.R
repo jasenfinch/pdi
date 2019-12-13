@@ -10,6 +10,6 @@
 rf <- function(analysisTable, cls, nreps = 100, seed = 1234){
   set.seed(seed)
   map(1:nreps,~{
-    randomForest(analysisTable,cls,proximity = T)
+    randomForest(analysisTable,cls,proximity = T,importance  = TRUE)
   })
 }
