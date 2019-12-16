@@ -128,5 +128,12 @@ preparePhenotypeData <- function(phenotypeData){
   
   description$Status[description$Status == 'Y'] <- 'Symptomatic'
   description$Status[description$Status == 'N'] <- 'Non-symptomatic'
+  
+  description <- description %>%
+    mutate_at(vars(contains(coll('(cm)'))),~{. * 10}) %>%
+    rename_at(vars(contains(coll('(cm)'))),~{str_replace(.,'(cm)','mm')}) %>%
+    mutate(`Diameter at breast height (cm)` = `Diameter at breast height (cm)` / 1000) %>%
+    rename(`Diameter at breast height (m)` = `Diameter at breast height (cm)`)
+  
   return(description)
 }
