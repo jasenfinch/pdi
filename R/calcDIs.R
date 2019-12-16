@@ -35,8 +35,8 @@ calcDIs <- function(files){
                                                     `Active bleeds`,
                                                     `Black staining size (cm)`,
                                                     `Black staining`,
-                                                    `Diameter at breast height (cm)`),
-           `Agrilus exit hole density (m^-2)` = agrilusExitHoleDensity(`Agrilus exit holes`,`Diameter at breast height (cm)`)
+                                                    `Diameter at breast height (m)`),
+           `Agrilus exit hole density (m^-2)` = agrilusExitHoleDensity(`Agrilus exit holes`,`Diameter at breast height (m)`)
     )
   analysisTable <- makeAnalysisTable(phenoData)
   
