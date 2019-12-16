@@ -133,7 +133,7 @@ preparePhenotypeData <- function(phenotypeData){
     mutate_at(vars(contains(coll('(cm)'))),~{. * 10}) %>%
     rename_at(vars(contains(coll('(cm)'))),~{str_replace(.,'(cm)','mm')}) %>%
     mutate(`Diameter at breast height (mm)` = `Diameter at breast height (mm)` / 1000) %>%
-    rename(`Diameter at breast height (m)` = `Diameter at breast height (cm)`)
+    rename(`Diameter at breast height (m)` = `Diameter at breast height (mm)`)
   
   return(description)
 }
