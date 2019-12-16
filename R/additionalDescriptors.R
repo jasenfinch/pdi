@@ -26,21 +26,24 @@ crownVolume <- function(r,h,l,c) {
 #' @param A number of active bleeds
 #' @param b average black stain size
 #' @param B number of black stains
-#' @param d diameter at breast height (mm)
+#' @param d diameter at breast height (m)
 #' @param s height to which stem surveyed from the tree base (m)
 #' @export
 
 bleedPrevalence <- function(a,A,b,B,d,s = 3) {
-  (a^2 * A + b^2 * B)/(s * d * pi)
+  s <- s * 1000
+  d <- d * 1000
+  
+  (a^2 * A + b^2 * B)/(s * d * pi) * 100
 }
 
 #' Agrilus exit hole density (m^-2)
 #' @description Calculate Agrilus biguttatus exit hole density.
 #' @param h number of Agrilus exit holes
-#' @param d diameter at breast height (mm)
+#' @param d diameter at breast height (m)
 #' @param s height to which stem surveyed from the tree base (m)
 #' @export
 
 agrilusExitHoleDensity <- function(h,d,s = 2) {
-  h/((s * d)/1000 * pi)
+  h/((s * d) * pi)
 }
