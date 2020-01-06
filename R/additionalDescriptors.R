@@ -47,3 +47,36 @@ bleedPrevalence <- function(a,A,b,B,d,s = 3) {
 agrilusExitHoleDensity <- function(h,d,s = 2) {
   h/((s * d) * pi)
 }
+
+#' Live crown ratio
+#' @description Calculate the live crown ratio
+#' @param h total height (m)
+#' @param l lower crown height (m)
+#' @export
+
+liveCrownRatio <- function(h,l){
+  (h - l) / h * 100
+}
+
+#' Crown surface area (m^2)
+#' @description Calculate the crown surface area
+#' @param r crown radius (m)
+#' @param h total height (m)
+#' @param l lower crown height (m)
+#' @param c crown condition (\%)
+#' @export
+
+crownSurfaceArea <- function(r,h,l,c){
+  cl <- h - l
+  ((4 * pi * cl) / (3 * r ^ 2)) * ((r ^ 2 + r ^ 4 / (4 * cl ^ 2)) ^ 1.5 - (r ^ 4 / (4 * cl ^ 2)) ^ 1.5) * c / 100
+}
+
+#' Crown production efficiency
+#' @description Calculate the crown production efficiency
+#' @param crown_surface_area crown surface area (m^2)
+#' @param crown_volume crown volume (m^3)
+#' @export
+
+crownProductionEfficiency <- function(crown_surface_area,crown_volume){
+  crown_surface_area / crown_volume
+}

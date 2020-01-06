@@ -3,6 +3,7 @@
 #' @param rfModels list containing random forest models
 #' @importFrom tibble as_tibble
 #' @importFrom stats cmdscale
+#' @importFrom purrr map
 #' @export
 
 mds <- function(rfModels){

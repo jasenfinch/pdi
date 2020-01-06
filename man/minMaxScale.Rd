@@ -6,6 +6,9 @@
 \usage{
 minMaxScale(vec)
 }
+\arguments{
+\item{vec}{vector of numbers to scale}
+}
 \description{
-variable min-max scaling
+Variable min-max scaling.
 }

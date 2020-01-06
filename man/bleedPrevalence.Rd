@@ -15,7 +15,7 @@ bleedPrevalence(a, A, b, B, d, s = 3)
 
 \item{B}{number of black stains}
 
-\item{d}{diameter at breast height (mm)}
+\item{d}{diameter at breast height (m)}
 
 \item{s}{height to which stem surveyed from the tree base (m)}
 }

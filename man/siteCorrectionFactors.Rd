@@ -6,7 +6,7 @@
 \usage{
 siteCorrectionFactors(
   phenoData,
-  descriptors = c("Diameter at breast height (mm)", "Lower crown height (m)",
+  descriptors = c("Diameter at breast height (m)", "Lower crown height (m)",
     "Timber height (m)", "Total height (m)", "Crown radius (m)")
 )
 }

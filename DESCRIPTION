@@ -13,7 +13,8 @@ Imports: dplyr,
         readxl,
         stringr,
         tibble,
-        tidyr
+        tidyr,
+        tidyselect
 LazyData: true
 RoxygenNote: 7.0.2
 Suggests: 

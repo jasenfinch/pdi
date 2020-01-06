@@ -4,15 +4,15 @@
 \alias{calcDIs}
 \title{Calculate Decline Indexes}
 \usage{
-calcDIs(files)
+calcDIs(rfModels, invertPDI = TRUE, invertDAI = TRUE)
 }
 \arguments{
-\item{files}{vector of file paths to phenotype data collection sheets (.xlsx)}
+\item{rfModels}{list containing random forest models}
+
+\item{invertPDI}{invert the PDI scale? TRUE/FALSE}
+
+\item{invertDAI}{invert the DAI scale? TRUE/FALSE}
 }
 \description{
-Calculate Phenotypic Decline Index (PDI) and Decline Acuteness Index from phenotypic descriptors.
-}
-\examples{
-files <- list.files(system.file('phenotypeDataCollectionSheets',package = 'pdi'),full.names = TRUE)
-DIs <- calcDIs(files)
+Calculate Phenotypic Decline Index (PDI) and Decline Acuteness Index (DAI)
 }

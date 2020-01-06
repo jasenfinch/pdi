@@ -1,5 +1,6 @@
 #' minMaxScale
-#' @description variable min-max scaling
+#' @description Variable min-max scaling.
+#' @param vec vector of numbers to scale
 #' @export
 
 minMaxScale <- function(vec){

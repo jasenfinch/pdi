@@ -9,7 +9,7 @@ agrilusExitHoleDensity(h, d, s = 2)
 \arguments{
 \item{h}{number of Agrilus exit holes}
 
-\item{d}{diameter at breast height (mm)}
+\item{d}{diameter at breast height (m)}
 
 \item{s}{height to which stem surveyed from the tree base (m)}
 }
