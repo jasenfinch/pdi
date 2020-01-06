@@ -17,7 +17,7 @@ calcDIs <- function(rfModels, invertPDI = TRUE, invertDAI = TRUE){
   if (isTRUE(invertPDI)) {
     DIs <- DIs %>%
       mutate(PDI = PDI %>%
-               {. * -1})
+               {(. - 1) * -1})
   }
   
   if (isTRUE(invertDAI)) {
