@@ -39,13 +39,13 @@ bleedPrevalence <- function(a,A,b,B,d,s = 3) {
 
 #' Agrilus exit hole density (m^-2)
 #' @description Calculate Agrilus biguttatus exit hole density.
-#' @param h number of Agrilus exit holes
+#' @param n number of Agrilus exit holes
 #' @param d diameter at breast height (m)
 #' @param s height to which stem surveyed from the tree base (m)
 #' @export
 
-agrilusExitHoleDensity <- function(h,d,s = 2) {
-  h/((s * d) * pi)
+agrilusExitHoleDensity <- function(n,d,s = 2) {
+  n/((s * d) * pi)
 }
 
 #' Live crown ratio
