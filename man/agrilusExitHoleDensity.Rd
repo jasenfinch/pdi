@@ -4,10 +4,10 @@
 \alias{agrilusExitHoleDensity}
 \title{Agrilus exit hole density (m^-2)}
 \usage{
-agrilusExitHoleDensity(h, d, s = 2)
+agrilusExitHoleDensity(n, d, s = 2)
 }
 \arguments{
-\item{h}{number of Agrilus exit holes}
+\item{n}{number of Agrilus exit holes}
 
 \item{d}{diameter at breast height (m)}
 
