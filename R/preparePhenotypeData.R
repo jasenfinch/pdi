@@ -1,5 +1,11 @@
+#' preparePhenotypeData
+#' @description process parsed phenotype data sheets into a tibble suitable for random forest analysis
+#' @param phenotypeData parsed phenotype data collection sheet returned from \code{readPhenotypeSheet}
 #' @importFrom tidyr spread
-#' @importFrom dplyr filter group_by mutate summarise tbl_df rename left_join
+#' @importFrom dplyr filter group_by mutate summarise tbl_df rename left_join mutate_at vars rename_at everything
+#' @importFrom tidyselect contains
+#' @importFrom stringr coll str_replace
+#' @export
 
 preparePhenotypeData <- function(phenotypeData){
   description <- phenotypeData %>%
@@ -100,6 +106,7 @@ preparePhenotypeData <- function(phenotypeData){
            `Average Active Bleed Size` = `Average Active Bleed Size`  %>% as.numeric(),
            `Average Black Staining Size` = `Average Black Staining Size` %>% as.numeric(),
            `Average Calloused Wound Size` = `Average Calloused Wound Size` %>% as.numeric(),
+           `Crown contact % of crown circumference` = `Crown contact % of crown circumference` %>% as.numeric()
     )
   
   description <- description %>%
@@ -118,9 +125,19 @@ preparePhenotypeData <- function(phenotypeData){
            `Stem fruiting bodies` = `Stem  fruiting bodies`,
            `Canopy closure` = `Canopy Closure`,
            `Social class` = `Social Class`,
-           `Dead stem tissue` = `Dead Stem Tissue`)
+           `Dead stem tissue` = `Dead Stem Tissue`,
+           `Crown contact (%)` = `Crown contact % of crown circumference`)
   
   description$Status[description$Status == 'Y'] <- 'Symptomatic'
   description$Status[description$Status == 'N'] <- 'Non-symptomatic'
+  
+  description <- description %>%
+    mutate_at(vars(contains(coll('(cm)'))),~{. * 10}) %>%
+    rename_at(vars(contains(coll('(cm)'))),~{str_replace(.,'(cm)','mm')}) %>%
+    mutate(`Diameter at breast height (mm)` = `Diameter at breast height (mm)` / 1000) %>%
+    rename(`Diameter at breast height (m)` = `Diameter at breast height (mm)`) %>%
+    mutate(Location = phenotypeData$Location) %>%
+    select(Location,everything())
+  
   return(description)
 }
