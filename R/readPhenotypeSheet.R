@@ -3,7 +3,7 @@
 #' @param file file path to excel file to parse
 #' @examples 
 #' file <- list.files(system.file('phenotypeDataCollectionSheets',package = 'pdi'),full.names = TRUE)
-#' d <- readPhenotypeSheet(file)
+#' d <- readPhenotypeSheet(file[1])
 #' @importFrom readxl read_excel
 #' @importFrom tibble rowid_to_column
 #' @importFrom tidyr gather
