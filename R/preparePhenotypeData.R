@@ -2,9 +2,9 @@
 #' @description process parsed phenotype data sheets into a tibble suitable for random forest analysis
 #' @param phenotypeData parsed phenotype data collection sheet returned from \code{readPhenotypeSheet}
 #' @importFrom tidyr spread
-#' @importFrom dplyr filter group_by mutate summarise tbl_df rename left_join mutate_at vars rename_at
+#' @importFrom dplyr filter group_by mutate summarise tbl_df rename left_join mutate_at vars rename_at everything
 #' @importFrom tidyselect contains
-#' @importFrom stringr coll
+#' @importFrom stringr coll str_replace
 #' @export
 
 preparePhenotypeData <- function(phenotypeData){
@@ -135,7 +135,9 @@ preparePhenotypeData <- function(phenotypeData){
     mutate_at(vars(contains(coll('(cm)'))),~{. * 10}) %>%
     rename_at(vars(contains(coll('(cm)'))),~{str_replace(.,'(cm)','mm')}) %>%
     mutate(`Diameter at breast height (mm)` = `Diameter at breast height (mm)` / 1000) %>%
-    rename(`Diameter at breast height (m)` = `Diameter at breast height (mm)`)
+    rename(`Diameter at breast height (m)` = `Diameter at breast height (mm)`) %>%
+    mutate(Location = phenotypeData$Location) %>%
+    select(Location,everything())
   
   return(description)
 }
