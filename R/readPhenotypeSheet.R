@@ -2,8 +2,8 @@
 #' @description parse .xls phenotype data collection sheets
 #' @param file file path to excel file to parse
 #' @examples 
-#' file <- list.files(system.file('phenotypeDataCollectionSheets',package = 'pdi'),full.names = TRUE)
-#' d <- readPhenotypeSheet(file[1])
+#' files <- list.files(system.file('phenotypeDataCollectionSheets',package = 'pdi'),full.names = TRUE)
+#' d <- readPhenotypeSheet(files[1])
 #' @importFrom readxl read_excel
 #' @importFrom tibble rowid_to_column
 #' @importFrom tidyr gather
@@ -36,7 +36,8 @@ readPhenotypeSheet <- function(file){
   
   description <- description %>%
     rowid_to_column(var = 'ID') %>%
-    gather('Descriptor','Value',-ID,)
+    .[,!is.na(colnames(.))] %>%
+    gather(Descriptor,Value,-ID)
   
   description <- description %>%
     filter(!(Descriptor == "NA" | is.na(Descriptor)))
