@@ -13,6 +13,6 @@ readPhenotypeSheet(file)
 parse .xls phenotype data collection sheets
 }
 \examples{
-file <- list.files(system.file('phenotypeDataCollectionSheets',package = 'pdi'),full.names = TRUE)
-d <- readPhenotypeSheet(file[1])
+files <- list.files(system.file('phenotypeDataCollectionSheets',package = 'pdi'),full.names = TRUE)
+d <- readPhenotypeSheet(files[1])
 }
