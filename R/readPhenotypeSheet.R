@@ -94,8 +94,8 @@ readPhenotypeSheet <- function(file){
   suppressWarnings(
     symptoms <- symptoms %>%
       bind_rows(.id = 'ID') %>%
-      gather('Symptom Type','Size',-ID,-`Crack No`) %>%
-      mutate(Size = str_replace_all(Size,'[:alpha:]','') %>% as.numeric())
+      gather('Symptom Type','Length',-ID,-`Crack No`) %>%
+      mutate(Length = str_replace_all(Length,'[:alpha:]','') %>% as.numeric())
   )
   
   phenotypeData <- list(Date = date,Location = location,Surveyor = surveyor,Description = description,CardinalAssessments = directionObservations,Symptoms = symptoms)
