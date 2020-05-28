@@ -35,8 +35,8 @@ readPhenotypeSheet <- function(file){
   description <- description[-1,]
   
   description <- description %>%
-    rowid_to_column(var = 'ID') %>%
     .[,!is.na(colnames(.))] %>%
+    rowid_to_column(var = 'ID') %>%
     gather(Descriptor,Value,-ID)
   
   description <- description %>%
