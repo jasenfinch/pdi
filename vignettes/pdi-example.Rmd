@@ -1,8 +1,8 @@
 ---
-title: "PDI Example"
+title: "Generating phenotypic decline indexes using the pdi package"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{PDI Example}
+  %\VignetteIndexEntry{Generating phenotypic decline indexes using the pdi package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,6 +14,68 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup,message=FALSE}
+```{r library_load,message=FALSE}
 library(pdi)
 ```
+
+```{r additional_libraries,message=FALSE}
+library(purrr)
+library(dplyr)
+```
+
+```{r}
+files <- list.files(
+  system.file('phenotypeDataCollectionSheets',
+              package = 'pdi'),
+  full.names = TRUE) 
+```
+
+```{r}
+basename(files)
+```
+
+```{r}
+d <- map(files,readPhenotypeSheet)
+```
+
+```{r}
+p <- map(d,preparePhenotypeData) %>%
+  bind_rows()
+```
+
+```{r}
+p
+```
+
+```{r}
+sc <- siteCorrection(p)
+```
+
+```{r}
+a <- sc %>%
+  mutate(`Live crown ratio (%)` = liveCrownRatio(`Total height (m)`,
+                                                 `Lower crown height (m)`),
+         `Crown condition (%)` = crownCondition(`Missing crown (%)`,
+                                                `Crown transparency (%)`),
+         `Crown volume (m^3)` = crownVolume(`Crown radius (m)`,
+                                            `Total height (m)`,
+                                            `Lower crown height (m)`,
+                                            `Crown condition (%)`),
+         `Bleed prevalence (%)` = bleedPrevalence(`Active bleed length (mm)`,
+                                                  `Active bleeds`,
+                                                  `Black staining length (mm)`,
+                                                  `Black staining`,
+                                                  `Diameter at breast height (m)`),
+         `Agrilus exit hole density (m^-2)` = agrilusExitHoleDensity(`Agrilus exit holes`,`Diameter at breast height (m)`)
+  )
+```
+
+```{r}
+t <- makeAnalysisTable(a)
+m <- rf(t,cls = NULL,nreps = 1)
+```
+
+```{r}
+DIs <- calcDIs(m)
+```
+
