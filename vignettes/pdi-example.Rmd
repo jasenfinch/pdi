@@ -1,0 +1,19 @@
+---
+title: "PDI Example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{PDI Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup,message=FALSE}
+library(pdi)
+```

@@ -12,3 +12,9 @@ Install from github:
 ```
 devtools::install_github('jasenfinch/pdi')
 ```
+
+See the vignette for how to generate a phenotypic decline index (PDI) for oak decline severity using example data:
+
+```
+vignette('pdi-example',package = 'pdi')
+```
