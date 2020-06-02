@@ -21,7 +21,7 @@ siteCorrectionFactors <- function(phenoData,descriptors = c("Diameter at breast 
   siteCorrections <- siteCorrect %>%
     group_by(Location,Descriptor) %>%
     summarise(Mean = mean(Value)) %>%
-    tbl_df() %>%
+    ungroup() %>%
     split(.$Descriptor) %>%
     map(~{
       d <- .
