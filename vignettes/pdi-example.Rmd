@@ -10,48 +10,81 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.align = 'center'
 )
 ```
+
+## Introduction
+
+Firstly load the package:
 
 ```{r library_load,message=FALSE}
 library(pdi)
 ```
 
+Additional packages will also need to be loaded to aid this example:
+
 ```{r additional_libraries,message=FALSE}
 library(purrr)
 library(dplyr)
+library(ggplot2)
+library(magrittr)
 ```
 
-```{r}
+## Example Data
+
+For this 
+```{r file_paths}
 files <- list.files(
   system.file('phenotypeDataCollectionSheets',
               package = 'pdi'),
   full.names = TRUE) 
 ```
 
-```{r}
+The filenames are shown below:
+
+```{r files}
 basename(files)
 ```
+## Index generation
 
-```{r}
+### Data preparation
+
+```{r read_files}
 d <- map(files,readPhenotypeSheet)
 ```
 
-```{r}
+```{r prepare_data}
 p <- map(d,preparePhenotypeData) %>%
   bind_rows()
 ```
 
-```{r}
+```{r data}
 p
 ```
 
-```{r}
+### Site correction
+
+```{r DBH_site_plot}
+ggplot(p,aes(x = Location,y = `Diameter at breast height (m)`)) +
+  geom_boxplot() +
+  theme_bw()
+```
+
+```{r site_correction}
 sc <- siteCorrection(p)
 ```
 
-```{r}
+```{r DBH_site_adjusted_plot}
+ggplot(sc,aes(x = Location,y = `Diameter at breast height (m)`)) +
+  geom_boxplot() +
+  theme_bw()
+```
+
+### Additional descriptors calculation
+
+```{r additional_descriptors}
 a <- sc %>%
   mutate(`Live crown ratio (%)` = liveCrownRatio(`Total height (m)`,
                                                  `Lower crown height (m)`),
@@ -70,12 +103,27 @@ a <- sc %>%
   )
 ```
 
-```{r}
+### Random forest
+```{r prepare_data_for_rf}
 t <- makeAnalysisTable(a)
-m <- rf(t,cls = NULL,nreps = 1)
 ```
 
-```{r}
-DIs <- calcDIs(m)
+```{r random_forest}
+m <- rf(t,cls = NULL,nreps = 10)
+```
+
+### Index calculation
+
+```{r calculate_DIs}
+DIs <- calcDIs(m,invertPDI = FALSE,invertDAI = FALSE) %>%
+  bind_cols(a %>%
+              select(Location,ID,Status))
+```
+
+```{r,fig.width=8}
+ggplot(DIs,aes(x = PDI,y = DAI,colour = Status)) +
+  geom_point() +
+  theme_bw() +
+  facet_wrap(~Location)
 ```
 
