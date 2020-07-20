@@ -9,6 +9,10 @@ calcDIs(rfModels, PDI = TRUE, DAI = TRUE, invertPDI = TRUE, invertDAI = TRUE)
 \arguments{
 \item{rfModels}{list containing random forest models as returned by \code{rf()}}
 
+\item{PDI}{TRUE/FALSE, calculate PDI?}
+
+\item{DAI}{TRUE/FALSE, calculate DAI?}
+
 \item{invertPDI}{invert the PDI scale? TRUE/FALSE. Ignored if argument PDI is FALSE}
 
 \item{invertDAI}{invert the DAI scale? TRUE/FALSE. Ignored if argument DAI is FALSE}

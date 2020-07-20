@@ -1,6 +1,8 @@
 #' Calculate Decline Indexes
 #' @description Calculate Phenotypic Decline Index (PDI) and Decline Acuteness Index (DAI).
 #' @param rfModels list containing random forest models as returned by \code{rf()}
+#' @param PDI TRUE/FALSE, calculate PDI?
+#' @param DAI TRUE/FALSE, calculate DAI?
 #' @param invertPDI invert the PDI scale? TRUE/FALSE. Ignored if argument PDI is FALSE
 #' @param invertDAI invert the DAI scale? TRUE/FALSE. Ignored if argument DAI is FALSE
 #' @export
