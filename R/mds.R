@@ -1,12 +1,13 @@
 #' mds
 #' @description perform multidimensional scaling of random forest proximities
-#' @param rfModels list containing random forest models
+#' @param rfModels list containing random forest models as returned by \code{rf()}
+#' @param dimensions number of dimensions to scale to
 #' @importFrom tibble as_tibble
 #' @importFrom stats cmdscale
 #' @importFrom purrr map
 #' @export
 
-mds <- function(rfModels){
+mds <- function(rfModels,dimensions = 2){
   rfModels %>%
     map(~{.$proximity %>%
         as_tibble(.name_repair = 'minimal') %>%
@@ -21,7 +22,7 @@ mds <- function(rfModels){
     select(-Sample1) %>%
     as.matrix() %>%
     {1 - .} %>%
-    cmdscale() %>%
+    cmdscale(k = dimensions) %>%
     {suppressMessages(as_tibble(.,.name_repair = 'universal'))} %>%
     rename(`Dimension 1` = `...1`,`Dimension 2` = `...2`)
 }

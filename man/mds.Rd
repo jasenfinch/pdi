@@ -4,10 +4,12 @@
 \alias{mds}
 \title{mds}
 \usage{
-mds(rfModels)
+mds(rfModels, dimensions = 2)
 }
 \arguments{
-\item{rfModels}{list containing random forest models}
+\item{rfModels}{list containing random forest models as returned by \code{rf()}}
+
+\item{dimensions}{number of dimensions to scale to}
 }
 \description{
 perform multidimensional scaling of random forest proximities
