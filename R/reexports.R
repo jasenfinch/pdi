@@ -3,3 +3,9 @@
 #' @export
 
 magrittr::`%>%`
+
+#' @importFrom purrr map
+#' @rdname reexports
+#' @export
+
+purrr::map
