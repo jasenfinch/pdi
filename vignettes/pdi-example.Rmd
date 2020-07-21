@@ -23,18 +23,22 @@ Firstly load the package:
 library(pdi)
 ```
 
-Additional packages will also need to be loaded to aid this example:
+The following example example will also make use the dplyr package for data manipulation, ggplot2 for visualisation and the pip (`%>%`) from the magrittr package.
+The additional packages can be loaded using:
 
 ```{r additional_libraries,message=FALSE}
-library(purrr)
 library(dplyr)
 library(ggplot2)
-library(magrittr)
 ```
 
 ## Example Data
 
-For this 
+For this example, we will be using phenotypic data provided within the package.
+This consists of data collected from two woodlands each with 20 oak trees surveyed.
+The trees were manually assigned an oak decline status with 10 decline symptomatic and 10 decline non-symptomatic trees at each site.
+
+The file paths for the example data can be 
+
 ```{r file_paths}
 files <- list.files(
   system.file('phenotypeDataCollectionSheets',
@@ -42,11 +46,12 @@ files <- list.files(
   full.names = TRUE) 
 ```
 
-The filenames are shown below:
+* data collection template
 
-```{r files}
-basename(files)
+```{r template}
+template(path = '.')
 ```
+
 ## Index generation
 
 ### Data preparation
@@ -84,6 +89,18 @@ ggplot(sc,aes(x = Location,y = `Diameter at breast height (m)`)) +
 
 ### Additional descriptors calculation
 
+Composite descriptors can 
+
+The additional descriptors provided by pdi include:
+
+* `liveCrownRatio` - Live crown ratio (%)
+* `crownCondition` - Crown condition (%)
+* `crownVolume` - Crown volume (m^3^)
+* `bleedPrevalence` - Bleed prevalence (%)
+* `agrilusExitHoleDensity` - Agrilus exit hole density (m^2^)
+
+The additional descriptors can be calculate for the example data using:
+
 ```{r additional_descriptors}
 a <- sc %>%
   mutate(`Live crown ratio (%)` = liveCrownRatio(`Total height (m)`,
@@ -115,15 +132,31 @@ m <- rf(t,cls = NULL,nreps = 10)
 ### Index calculation
 
 ```{r calculate_DIs}
-DIs <- calcDIs(m,invertPDI = FALSE,invertDAI = FALSE) %>%
+DIs <- calcDIs(m,DAI = FALSE,invertPDI = FALSE) %>%
   bind_cols(a %>%
               select(Location,ID,Status))
 ```
 
-```{r,fig.width=8}
-ggplot(DIs,aes(x = PDI,y = DAI,colour = Status)) +
-  geom_point() +
+```{r,fig.width=7}
+ggplot(DIs,aes(x = Status,y = PDI)) +
+  geom_boxplot() +
   theme_bw() +
   facet_wrap(~Location)
+```
+
+### Descriptor contributions
+
+```{r contributions}
+descriptor_contributions <- m %>%
+  descriptorContributions()
+```
+
+```{r contributions_plot, fig.height=6,fig.width=5}
+descriptor_contributions %>%
+  arrange(MeanDecreaseAccuracy) %>%
+  mutate(Descriptor = factor(Descriptor,levels = Descriptor)) %>%
+  ggplot(aes(x = MeanDecreaseAccuracy,y = Descriptor)) +
+  geom_point() +
+  theme_bw()
 ```
 
