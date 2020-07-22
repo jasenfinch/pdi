@@ -23,7 +23,7 @@ To begin, load the package:
 library(pdi)
 ```
 
-The following example example will also make use the dplyr package for data manipulation, ggplot2 for visualisation and the pip (`%>%`) from the magrittr package.
+The following example example will also make use the dplyr package for data manipulation, ggplot2 for visualisation and the pipe (`%>%`) from the magrittr package.
 The additional packages can be loaded using:
 
 ```{r additional_libraries,message=FALSE}
@@ -85,14 +85,19 @@ ggplot(p,aes(x = Location,y = `Diameter at breast height (m)`)) +
   theme_bw()
 ```
 
-```{r site_correction}
-sc <- siteCorrection(p)
+```{r site_adjustment}
+sa <- siteAdjustment(p)
 ```
 
 ```{r DBH_site_adjusted_plot}
-ggplot(sc,aes(x = Location,y = `Diameter at breast height (m)`)) +
+ggplot(sa,aes(x = Location,y = `Diameter at breast height (m)`)) +
   geom_boxplot() +
   theme_bw()
+```
+
+```{r}
+sa_factors <- siteAdjustmentFactors(p)
+sa_factors
 ```
 
 ### Additional descriptors calculation
@@ -110,7 +115,7 @@ The additional descriptors provided by pdi include:
 The additional descriptors can be calculate for the example data using:
 
 ```{r additional_descriptors}
-a <- sc %>%
+a <- sa %>%
   mutate(`Live crown ratio (%)` = liveCrownRatio(`Total height (m)`,
                                                  `Lower crown height (m)`),
          `Crown condition (%)` = crownCondition(`Missing crown (%)`,
