@@ -26,9 +26,9 @@ siteAdjustmentFactors <- function(phenoData,descriptors = c("Diameter at breast 
     map(~{
       d <- .
       d %>%
-        mutate(Correction = Mean - ({overallMeans %>% filter(Descriptor == d$Descriptor[1]) %>% .$Mean}))
+        mutate(Adjustment = Mean - ({overallMeans %>% filter(Descriptor == d$Descriptor[1]) %>% .$Mean}))
     }) %>%
     bind_rows() %>%
-    select(Descriptor,Location,Mean,Correction)
+    select(Descriptor,Location,Mean,Adjustment)
   return(siteCorrections)
 }

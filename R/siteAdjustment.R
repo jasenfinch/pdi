@@ -25,7 +25,7 @@ siteAdjustment <- function(phenoData,descriptors = c("Diameter at breast height 
           d <- .
           d %>%
             mutate(Value = Value - { siteCorrections %>%
-                filter(Descriptor == d$Descriptor[1],Location == d$Location[1]) %>% .$Correction})
+                filter(Descriptor == d$Descriptor[1],Location == d$Location[1]) %>% .$Adjustment})
         }) %>%
         bind_rows()
     }) %>%
