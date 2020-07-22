@@ -5,7 +5,7 @@ files <- list.files(system.file('phenotypeDataCollectionSheets',package = 'pdi')
 d <- map(files,readPhenotypeSheet)
 p <- map(d,preparePhenotypeData) %>%
   bind_rows()
-sc <- siteCorrection(p)
+sc <- siteAdjustment(p)
 a <- sc %>%
   mutate(`Live crown ratio (%)` = liveCrownRatio(`Total height (m)`,
                                                  `Lower crown height (m)`),
@@ -44,7 +44,7 @@ test_that('phenotype data correctly prepared',{
 })
 
 test_that('site correction works',{
-  sc <- siteCorrection(p)
+  sc <- siteAdjustment(p)
   
   expect_identical(class(sc),c("tbl_df","tbl","data.frame"))
   expect_equal(ncol(sc),36)

@@ -1,10 +1,10 @@
-#' siteCorrection
-#' @description perform a site correction of selected descriptors
+#' siteAdjustment
+#' @description Perform a site adjustment of selected descriptors.
 #' @param phenoData phenoData tibble containing phenotype data
 #' @param descriptors columns of phenoData on which to perform site correction
 #' @export
 
-siteCorrection <- function(phenoData,descriptors = c("Diameter at breast height (m)",
+siteAdjustment <- function(phenoData,descriptors = c("Diameter at breast height (m)",
                                                      "Lower crown height (m)",
                                                      "Timber height (m)",
                                                      "Total height (m)",
@@ -13,7 +13,7 @@ siteCorrection <- function(phenoData,descriptors = c("Diameter at breast height 
     select(Location,ID,descriptors) %>%
     gather('Descriptor','Value',-Location,-ID)
   
-  siteCorrections <- siteCorrectionFactors(phenoData,descriptors)
+  siteCorrections <- siteAdjustmentFactors(phenoData,descriptors)
   
   siteCorrect <- siteCorrect %>%
     split(.$Descriptor) %>%
