@@ -25,6 +25,7 @@ a <- sc %>%
 t <- makeAnalysisTable(a)
 m <- rf(t,cls = NULL,nreps = 1)
 DIs <- calcDIs(m)
+descriptor_contributions <- descriptorContributions(m)
 
 test_that('phenotype sheets parsed correctly',{
   files <- list.files(system.file('phenotypeDataCollectionSheets',package = 'pdi'),full.names = TRUE) 
@@ -73,4 +74,11 @@ test_that('DIs calculated correctly',{
   expect_equal(nrow(DIs),40)
   expect_equal(round(mean(DIs$PDI),7),0.5345082)
   expect_equal(round(mean(DIs$DAI),8),-0.09114052)
+})
+
+test_that('descriptor contributions calculated correctly',{
+  descriptor_contributions <- descriptorContributions(m)
+  
+  expect_equal(ncol(descriptor_contributions),5)
+  expect_equal(nrow(descriptor_contributions),36)
 })
