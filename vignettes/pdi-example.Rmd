@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-Firstly load the package:
+To begin, load the package:
 
 ```{r library_load,message=FALSE}
 library(pdi)
@@ -37,7 +37,7 @@ For this example, we will be using phenotypic data provided within the package.
 This consists of data collected from two woodlands each with 20 oak trees surveyed.
 The trees were manually assigned an oak decline status with 10 decline symptomatic and 10 decline non-symptomatic trees at each site.
 
-The file paths for the example data can be 
+The file paths for the example data can be retrieved with the following:
 
 ```{r file_paths}
 files <- list.files(
@@ -46,10 +46,10 @@ files <- list.files(
   full.names = TRUE) 
 ```
 
-* data collection template
+For collecting further data, a clean copy of the phenotyping data collection sheet template can be exported using:
 
-```{r template}
-template(path = '.')
+```{r template,eval=FALSE}
+phenotypingTemplate(path = '.')
 ```
 
 ## Index generation
@@ -116,7 +116,8 @@ a <- sc %>%
                                                   `Black staining length (mm)`,
                                                   `Black staining`,
                                                   `Diameter at breast height (m)`),
-         `Agrilus exit hole density (m^-2)` = agrilusExitHoleDensity(`Agrilus exit holes`,`Diameter at breast height (m)`)
+         `Agrilus exit hole density (m^-2)` = agrilusExitHoleDensity(`Agrilus exit holes`,
+                                                                     `Diameter at breast height (m)`)
   )
 ```
 
