@@ -56,20 +56,28 @@ phenotypingTemplate(path = '.')
 
 ### Data preparation
 
+There are several steps involved the initial preparation of the example phenotypic data collection sheets.
+
+Firstly, the sheets can be parsed to give a list object containg the raw data for each site using:
+
 ```{r read_files}
 d <- map(files,readPhenotypeSheet)
 ```
+
+These can then be assembled into a single tibble with the following:
 
 ```{r prepare_data}
 p <- map(d,preparePhenotypeData) %>%
   bind_rows()
 ```
 
+As shown below, this provides a tibble containing `r ncol(p)` phenotypic descriptors for the `r nrow(p)` trees across the two sites.
+
 ```{r data}
 p
 ```
 
-### Site correction
+### Tree size descriptor adjustment
 
 ```{r DBH_site_plot}
 ggplot(p,aes(x = Location,y = `Diameter at breast height (m)`)) +
@@ -122,6 +130,7 @@ a <- sc %>%
 ```
 
 ### Random forest
+
 ```{r prepare_data_for_rf}
 t <- makeAnalysisTable(a)
 ```
@@ -157,6 +166,15 @@ descriptor_contributions %>%
   arrange(MeanDecreaseAccuracy) %>%
   mutate(Descriptor = factor(Descriptor,levels = Descriptor)) %>%
   ggplot(aes(x = MeanDecreaseAccuracy,y = Descriptor)) +
+  geom_point() +
+  theme_bw()
+```
+
+```{r crown_volume_plot}
+DIs %>%
+  bind_cols(a %>%
+              select(`Crown volume (m^3)`)) %>%
+  ggplot(aes(x = PDI,y = `Crown volume (m^3)`)) +
   geom_point() +
   theme_bw()
 ```
