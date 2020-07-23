@@ -155,23 +155,39 @@ a <- sa %>%
 
 ### Random forest model fitting
 
+Prior to index calculation, random forest models need to be fitted to the data, from which the indexes are calculated.
+
+The data first needs to be prepared for random forest analysis:
+
 ```{r prepare_data_for_rf}
 t <- makeAnalysisTable(a)
 ```
+
+Then random forest can then be performed using:
 
 ```{r random_forest}
 m <- rf(t,cls = NULL,nreps = 10)
 ```
 
-* use of supervised vs unsupervised
+Here we are using unsupervised analysis (`cls = NULL`) as this data provides clear differentiation in decline status (see Index calculation section).
+A supervised analysis could instead be used for data sets where this distinction is not so clear and unsupervised methods aren't appropriate.
 
 ### Index calculation
+
+The following will calculate the decline indexes based on the proximity values calculated from the random forest models generated in the section above.
 
 ```{r calculate_DIs}
 DIs <- calcDIs(m,DAI = FALSE,invertPDI = FALSE) %>%
   bind_cols(a %>%
               select(Location,ID,Status))
 ```
+
+Here, only the PDI is calculated due to the low number of observations in the example data set.
+We have also chosen not to invert the calculated PDI index scale in this example.
+In other cases, inversion may be required to ensure the scale is inverted correctly.
+
+The box plots of the calculated indexes are shown below.
+It can be seen that the decline statuses are clearly differentiated at Site 1 and less so at Site 2 with symptomatic trees having PDI values closer to 1.
 
 ```{r,fig.width=7}
 ggplot(DIs,aes(x = Status,y = PDI)) +
