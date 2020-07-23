@@ -199,8 +199,7 @@ ggplot(DIs,aes(x = Status,y = PDI)) +
 ### Descriptor contributions
 
 Now the decline indexes have been calculated, we next need to understand the relative contributions of the descriptors to the indexes.
-
-The descriptor contributions to the indexes can be calculated using the mean decrease in accuracy variable importance metric from the fitted random forest models.
+These can be calculated using the mean decrease in accuracy variable importance metric from the fitted random forest models.
 These importance scores can be retrieved using the following:
 
 ```{r contributions}
@@ -231,4 +230,6 @@ DIs %>%
   geom_point() +
   theme_bw()
 ```
-* importance of assessing descriptor contributions and associations to/with the decline indexes
+
+It is important at this stage to carefully assess the descriptor contributions to, and associations with, the calculated decline indexes to ensure they suitably describe the decline syndromes on which they are based.
+Where this has not been achieved, solutions could include using supervised random forest models instead of the unsupervised approach used here or the addition/removal of phenotypic descriptors from the models.
