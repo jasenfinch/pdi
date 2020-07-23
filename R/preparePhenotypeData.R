@@ -2,7 +2,7 @@
 #' @description process parsed phenotype data sheets into a tibble suitable for random forest analysis
 #' @param phenotypeData parsed phenotype data collection sheet returned from \code{readPhenotypeSheet}
 #' @importFrom tidyr spread
-#' @importFrom dplyr filter group_by mutate summarise tbl_df rename left_join mutate_at vars rename_at everything
+#' @importFrom dplyr filter group_by mutate summarise tbl_df rename left_join mutate_at vars rename_at everything ungroup
 #' @importFrom tidyselect contains
 #' @importFrom stringr coll str_replace
 #' @export
@@ -38,27 +38,27 @@ preparePhenotypeData <- function(phenotypeData){
   
   symptoms <- phenotypeData %>%
     .$Symptoms
-  symptoms$Size[is.na(symptoms$Size)] <- 0
+  symptoms$Length[is.na(symptoms$Length)] <- 0
   
   crackFrequencies <- symptoms
-  crackFrequencies$Size[crackFrequencies$Size > 0] <- 1
+  crackFrequencies$Length[crackFrequencies$Length > 0] <- 1
   
   crackFrequencies <- crackFrequencies %>%
     group_by(ID,`Symptom Type`) %>%
-    summarise(Count = sum(Size)) %>%
+    summarise(Count = sum(Length)) %>%
     spread(`Symptom Type`,Count) %>%
-    tbl_df() %>%
+    ungroup() %>%
     mutate(ID = as.numeric(ID))
   
   
-  averageCrackSize <- symptoms %>%
+  averageCrackLength <- symptoms %>%
     group_by(ID,`Symptom Type`) %>%
-    summarise(`Average Crack Size` = mean(Size,na.rm = T)) %>%
-    spread(`Symptom Type`,`Average Crack Size`) %>%
-    rename(`Average Active Bleed Size` = `Active bleeds`,
-           `Average Black Staining Size` = `Black staining`,
-           `Average Calloused Wound Size` = `Calloused wound`) %>%
-    tbl_df() %>%
+    summarise(`Average Crack Length` = mean(Length,na.rm = T)) %>%
+    spread(`Symptom Type`,`Average Crack Length`) %>%
+    rename(`Average Active Bleed Length` = `Active bleeds`,
+           `Average Black Staining Length` = `Black staining`,
+           `Average Calloused Wound Length` = `Calloused wound`) %>%
+    ungroup() %>%
     mutate(ID = as.numeric(ID))
   
   description <- description %>%
@@ -66,7 +66,7 @@ preparePhenotypeData <- function(phenotypeData){
     left_join(averageCrownRadius, by = "ID") %>%
     left_join(canopyClosure, by = "ID") %>%
     left_join(crackFrequencies, by = "ID") %>%
-    left_join(averageCrackSize, by = "ID")
+    left_join(averageCrackLength, by = "ID")
   
   description$`Insect defoliation type` <- tolower(description$`Insect defoliation type`)
   
@@ -86,9 +86,9 @@ preparePhenotypeData <- function(phenotypeData){
   description$`Active bleeds`[is.na(description$`Active bleeds`)] <- 0
   description$`Black staining`[is.na(description$`Black staining`)] <- 0
   description$`Calloused wound`[is.na(description$`Calloused wound`)] <- 0
-  description$`Average Active Bleed Size`[is.na(description$`Average Active Bleed Size`)] <- 0
-  description$`Average Black Staining Size`[is.na(description$`Average Black Staining Size`)] <- 0
-  description$`Average Calloused Wound Size`[is.na(description$`Average Calloused Wound Size`)] <- 0
+  description$`Average Active Bleed Length`[is.na(description$`Average Active Bleed Length`)] <- 0
+  description$`Average Black Staining Length`[is.na(description$`Average Black Staining Length`)] <- 0
+  description$`Average Calloused Wound Length`[is.na(description$`Average Calloused Wound Length`)] <- 0
   description$`Agrillus exit holes`[is.na(description$`Agrillus exit holes`)] <- 0
   
   description <- description %>%
@@ -103,9 +103,9 @@ preparePhenotypeData <- function(phenotypeData){
            `Active bleeds` = `Active bleeds` %>% as.numeric(),
            `Black staining` = `Black staining` %>% as.numeric(),
            `Calloused wound` = `Calloused wound` %>% as.numeric(),
-           `Average Active Bleed Size` = `Average Active Bleed Size`  %>% as.numeric(),
-           `Average Black Staining Size` = `Average Black Staining Size` %>% as.numeric(),
-           `Average Calloused Wound Size` = `Average Calloused Wound Size` %>% as.numeric(),
+           `Average Active Bleed Length` = `Average Active Bleed Length`  %>% as.numeric(),
+           `Average Black Staining Length` = `Average Black Staining Length` %>% as.numeric(),
+           `Average Calloused Wound Length` = `Average Calloused Wound Length` %>% as.numeric(),
            `Crown contact % of crown circumference` = `Crown contact % of crown circumference` %>% as.numeric()
     )
   
@@ -118,9 +118,9 @@ preparePhenotypeData <- function(phenotypeData){
            `Timber height (m)` = `Timber Ht`,
            `Total height (m)` = `Total Ht`,
            `Crown radius (m)` = `Average Crown radius`,
-           `Active bleed size (cm)` = `Average Active Bleed Size`,
-           `Black staining size (cm)` = `Average Black Staining Size` ,
-           `Calloused wound size (cm)` = `Average Calloused Wound Size`,
+           `Active bleed length (cm)` = `Average Active Bleed Length`,
+           `Black staining length (cm)` = `Average Black Staining Length` ,
+           `Calloused wound length (cm)` = `Average Calloused Wound Length`,
            `Agrilus exit holes` = `Agrillus exit holes`,
            `Stem fruiting bodies` = `Stem  fruiting bodies`,
            `Canopy closure` = `Canopy Closure`,

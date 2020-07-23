@@ -2,8 +2,8 @@
 #' @description parse .xls phenotype data collection sheets
 #' @param file file path to excel file to parse
 #' @examples 
-#' file <- list.files(system.file('phenotypeDataCollectionSheets',package = 'pdi'),full.names = TRUE)
-#' d <- readPhenotypeSheet(file[1])
+#' files <- list.files(system.file('phenotypeDataCollectionSheets',package = 'pdi'),full.names = TRUE)
+#' d <- readPhenotypeSheet(files[1])
 #' @importFrom readxl read_excel
 #' @importFrom tibble rowid_to_column
 #' @importFrom tidyr gather
@@ -35,8 +35,9 @@ readPhenotypeSheet <- function(file){
   description <- description[-1,]
   
   description <- description %>%
+    .[,!is.na(colnames(.))] %>%
     rowid_to_column(var = 'ID') %>%
-    gather('Descriptor','Value',-ID,)
+    gather(Descriptor,Value,-ID)
   
   description <- description %>%
     filter(!(Descriptor == "NA" | is.na(Descriptor)))
@@ -93,8 +94,8 @@ readPhenotypeSheet <- function(file){
   suppressWarnings(
     symptoms <- symptoms %>%
       bind_rows(.id = 'ID') %>%
-      gather('Symptom Type','Size',-ID,-`Crack No`) %>%
-      mutate(Size = str_replace_all(Size,'[:alpha:]','') %>% as.numeric())
+      gather('Symptom Type','Length',-ID,-`Crack No`) %>%
+      mutate(Length = str_replace_all(Length,'[:alpha:]','') %>% as.numeric())
   )
   
   phenotypeData <- list(Date = date,Location = location,Surveyor = surveyor,Description = description,CardinalAssessments = directionObservations,Symptoms = symptoms)

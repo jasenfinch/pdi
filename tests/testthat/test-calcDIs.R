@@ -5,7 +5,7 @@ files <- list.files(system.file('phenotypeDataCollectionSheets',package = 'pdi')
 d <- map(files,readPhenotypeSheet)
 p <- map(d,preparePhenotypeData) %>%
   bind_rows()
-sc <- siteCorrection(p)
+sc <- siteAdjustment(p)
 a <- sc %>%
   mutate(`Live crown ratio (%)` = liveCrownRatio(`Total height (m)`,
                                                  `Lower crown height (m)`),
@@ -15,9 +15,9 @@ a <- sc %>%
                                             `Total height (m)`,
                                             `Lower crown height (m)`,
                                             `Crown condition (%)`),
-         `Bleed prevalence (%)` = bleedPrevalence(`Active bleed size (mm)`,
+         `Bleed prevalence (%)` = bleedPrevalence(`Active bleed length (mm)`,
                                                   `Active bleeds`,
-                                                  `Black staining size (mm)`,
+                                                  `Black staining length (mm)`,
                                                   `Black staining`,
                                                   `Diameter at breast height (m)`),
          `Agrilus exit hole density (m^-2)` = agrilusExitHoleDensity(`Agrilus exit holes`,`Diameter at breast height (m)`)
@@ -25,6 +25,7 @@ a <- sc %>%
 t <- makeAnalysisTable(a)
 m <- rf(t,cls = NULL,nreps = 1)
 DIs <- calcDIs(m)
+descriptor_contributions <- descriptorContributions(m)
 
 test_that('phenotype sheets parsed correctly',{
   files <- list.files(system.file('phenotypeDataCollectionSheets',package = 'pdi'),full.names = TRUE) 
@@ -43,7 +44,7 @@ test_that('phenotype data correctly prepared',{
 })
 
 test_that('site correction works',{
-  sc <- siteCorrection(p)
+  sc <- siteAdjustment(p)
   
   expect_identical(class(sc),c("tbl_df","tbl","data.frame"))
   expect_equal(ncol(sc),36)
@@ -73,4 +74,11 @@ test_that('DIs calculated correctly',{
   expect_equal(nrow(DIs),40)
   expect_equal(round(mean(DIs$PDI),7),0.5345082)
   expect_equal(round(mean(DIs$DAI),8),-0.09114052)
+})
+
+test_that('descriptor contributions calculated correctly',{
+  descriptor_contributions <- descriptorContributions(m)
+  
+  expect_equal(ncol(descriptor_contributions),5)
+  expect_equal(nrow(descriptor_contributions),36)
 })
