@@ -2,16 +2,22 @@
 #' @description perform random forest repetitions
 #' @param analysisTable tibble of phenotype data suitable for random forest analysis as returned by \code{preparePhenotypeData}
 #' @param cls analysisTable column to use as response vector. NULL for unsupervised analyses.
+#' @param params additional arguments to pass to randomForest:randomForest
 #' @param nreps number of repetitions
 #' @param seed random number seed
 #' @importFrom randomForest randomForest
 #' @importFrom magrittr set_names
 #' @export
 
-rf <- function(analysisTable, cls, nreps = 100, seed = 1234){
+rf <- function(analysisTable, cls, params = list(),nreps = 100, seed = 1234){
   set.seed(seed)
+
   map(1:nreps,~{
-    randomForest(analysisTable,cls,proximity = T,importance  = TRUE)
+    p <- formals(randomForest::randomForest)
+    p$x <- analysisTable
+    p$y <- cls
+    p <- c(p,params,list(proximity = T,importance  = TRUE))
+    do.call(randomForest::randomForest,p)
   })
 }
 
