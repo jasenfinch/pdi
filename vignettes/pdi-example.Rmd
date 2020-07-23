@@ -1,6 +1,7 @@
 ---
 title: "Generating phenotypic decline indexes using the pdi package"
 output: rmarkdown::html_vignette
+bibliography: references.bib
 vignette: >
   %\VignetteIndexEntry{Generating phenotypic decline indexes using the pdi package}
   %\VignetteEngine{knitr::rmarkdown}
@@ -16,6 +17,19 @@ knitr::opts_chunk$set(
 ```
 
 ## Introduction
+
+Oak declines are complex disease syndromes that consist of many visual indicators that include aspects of tree size, crown condition and trunk condition [@denman2009; @denman2014].
+This can cause difficulty in the manual classification of sympotomatic and non-symptomatic trees from what is in reality a broad spectrum of oak tree health condition.
+
+Two oak decline indexes have been developed to quantitatively describe and differentiate oak decline syndromes in *Quercus robur*.
+These include:
+
+* **Phenotypic Decline Index (PDI)** - a measure of overall decline severity, scoring trees between 0 and 1. More severely declining oak trees having a score closer to 1.
+
+* **Decline Acuteness Index (DAI)** - a measure to differentiate between Chronic Oak Decline (COD) and Acute Oak Decline with a score between -1 and 1. Acutely declining trees having
+a score closer to 1 and chronically declining trees having a score closer to -1.
+
+This vignette will provide an example framework of how to generate these decline indexes based on the machine learning algorithm random forest, using an example set of phenotypic descriptors.
 
 To begin, load the package:
 
@@ -233,3 +247,5 @@ DIs %>%
 
 It is important at this stage to carefully assess the descriptor contributions to, and associations with, the calculated decline indexes to ensure they suitably describe the decline syndromes on which they are based.
 Where this has not been achieved, solutions could include using supervised random forest models instead of the unsupervised approach used here or the addition/removal of phenotypic descriptors from the models.
+
+## References
