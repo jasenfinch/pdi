@@ -74,10 +74,22 @@ p <- map(d,preparePhenotypeData) %>%
 As shown below, this provides a tibble containing `r ncol(p)` phenotypic descriptors for the `r nrow(p)` trees across the two sites.
 
 ```{r data}
-p
+print(p)
 ```
 
 ### Tree size descriptor adjustment
+
+To account for potential differences in the age/size of tree between sites, an adjustment can be applied to standardised these descriptors to ensure that they are comparible between the sites.
+
+The tree size descriptors in the example data set include:
+
+* Diameter at breast height (m)
+* Lower crown height (m)
+* Timber height (m)
+* Total height (m)
+* Crown radius (m)
+
+As can be seen in the plot below, there is a difference in the diameter at breast height between the sites; Site 2 having trees with greater diameter than Site 1.
 
 ```{r DBH_site_plot}
 ggplot(p,aes(x = Location,y = `Diameter at breast height (m)`)) +
@@ -85,15 +97,22 @@ ggplot(p,aes(x = Location,y = `Diameter at breast height (m)`)) +
   theme_bw()
 ```
 
+The adjustmemt to the tree size descriptors can be applied using the following.
+For each descriptor, this will adjust the site means to the overall mean, removing inter-site variance while maintaining intra-site variance.
+
 ```{r site_adjustment}
 sa <- siteAdjustment(p)
 ```
+
+The plot below shows the effect of the adjustment of the diameter at breast height with the difference between the sites removed.
 
 ```{r DBH_site_adjusted_plot}
 ggplot(sa,aes(x = Location,y = `Diameter at breast height (m)`)) +
   geom_boxplot() +
   theme_bw()
 ```
+
+The adjustment factors for each descriptor at each site can be returned using the following:
 
 ```{r}
 sa_factors <- siteAdjustmentFactors(p)
@@ -110,7 +129,7 @@ The additional descriptors provided by pdi include:
 * `crownCondition` - Crown condition (%)
 * `crownVolume` - Crown volume (m^3^)
 * `bleedPrevalence` - Bleed prevalence (%)
-* `agrilusExitHoleDensity` - Agrilus exit hole density (m^2^)
+* `agrilusExitHoleDensity` - Agrilus exit hole density (m^-2^)
 
 The additional descriptors can be calculate for the example data using:
 
