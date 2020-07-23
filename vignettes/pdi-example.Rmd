@@ -1,6 +1,7 @@
 ---
 title: "Generating phenotypic decline indexes using the pdi package"
 output: rmarkdown::html_vignette
+author: Jasen Finch
 bibliography: references.bib
 vignette: >
   %\VignetteIndexEntry{Generating phenotypic decline indexes using the pdi package}
