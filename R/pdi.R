@@ -9,6 +9,6 @@ globalVariables(c("Missing crown (%)",'Crown transparency (%)','Crown radius (m)
                   'Average Crown radius','Average Bleed Length','Calloused Wound Length','Symptomatic',
                   'Stem  fruiting bodies','Canopy Closure','Social Class','Dead Stem Tissue','Direction','Crack No',
                   'Average Active Bleed Length','Average Black Staining Length','Calloused Wound Length','Mean',
-                  'Average Calloused Wound Length','Correction','Crown contact % of crown circumference','ChosenGroup','...1',
+                  'Average Calloused Wound Length','Adjustment','Crown contact % of crown circumference','ChosenGroup','...1',
                   '...2','Diameter at breast height (mm)'
                   ))
