@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 ## Introduction
 
 Oak declines are complex disease syndromes that consist of many visual indicators that include aspects of tree size, crown condition and trunk condition [@denman2009; @denman2014].
-This can cause difficulty in the manual classification of sympotomatic and non-symptomatic trees from what is in reality a broad spectrum of oak tree health condition.
+This can cause difficulty in the manual classification of symptomatic and non-symptomatic trees from what is in reality a broad spectrum of oak tree health condition.
 
 Two oak decline indexes have been developed to quantitatively describe and differentiate oak decline syndromes in *Quercus robur*.
 These include:
@@ -38,7 +38,7 @@ library(pdi)
 ```
 
 The following example example will also make use the dplyr package for data manipulation, ggplot2 for visualisation and the pipe (`%>%`) from the magrittr package.
-The additional packages can be loaded using:
+The additionally required packages can be loaded using:
 
 ```{r additional_libraries,message=FALSE}
 library(dplyr)
@@ -72,7 +72,7 @@ phenotypingTemplate(path = '.')
 
 There are several steps involved the initial preparation of the example phenotypic data collection sheets.
 
-Firstly, the sheets can be parsed to give a list object containg the raw data for each site using:
+Firstly, the sheets can be parsed to give a list object containing the raw data for each site using:
 
 ```{r read_files}
 d <- map(files,readPhenotypeSheet)
@@ -93,7 +93,7 @@ print(p)
 
 ### Tree size descriptor adjustment
 
-To account for potential differences in the age/size of tree between sites, an adjustment can be applied to standardised these descriptors to ensure that they are comparible between the sites.
+To account for potential differences in the age/size of tree between sites, an adjustment can be applied to standardised these descriptors to ensure that they are comparable between the sites.
 
 The tree size descriptors in the example data set include:
 
@@ -111,7 +111,7 @@ ggplot(p,aes(x = Location,y = `Diameter at breast height (m)`)) +
   theme_bw()
 ```
 
-The adjustmemt to the tree size descriptors can be applied using the following.
+The adjustment to the tree size descriptors can be applied using the following.
 For each descriptor, this will adjust the site means to the overall mean, removing inter-site variance while maintaining intra-site variance.
 
 ```{r site_adjustment}
@@ -184,7 +184,7 @@ m <- rf(t,cls = NULL,nreps = 10)
 ```
 
 Here we are using unsupervised analysis (`cls = NULL`) as this data provides clear differentiation in decline status (see Index calculation section).
-A supervised analysis could instead be used for data sets where this distinction is not so clear and unsupervised methods aren't appropriate.
+A supervised analysis could instead be used for data sets where this distinction is not so clear and unsupervised methods are not appropriate.
 
 ### Index calculation
 
@@ -198,7 +198,7 @@ DIs <- calcDIs(m,DAI = FALSE,invertPDI = FALSE) %>%
 
 Here, only the PDI is calculated due to the low number of observations in the example data set.
 We have also chosen not to invert the calculated PDI index scale in this example.
-In other cases, inversion may be required to ensure the scale is inverted correctly.
+In other cases, inversion may be required to ensure the scale is orientated correctly.
 
 The box plots of the calculated indexes are shown below.
 It can be seen that the decline statuses are clearly differentiated at Site 1 and less so at Site 2 with symptomatic trees having PDI values closer to 1.
@@ -221,7 +221,7 @@ descriptor_contributions <- m %>%
   descriptorContributions()
 ```
 
-The relative descriptor contributions can then be plotted using the following code with the higher contributing descriptors at the top of the y axis.
+The relative descriptor contributions can then be plotted using the following code, with the higher contributing descriptors at the top of the y-axis.
 
 ```{r contributions_plot, fig.height=6,fig.width=5}
 descriptor_contributions %>%
