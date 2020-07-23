@@ -121,7 +121,7 @@ sa_factors
 
 ### Additional descriptors calculation
 
-Composite descriptors can 
+Additional composite descriptors can be calculated to account for the three dimensional tree attributes and covariate nature of certain descriptors. 
 
 The additional descriptors provided by pdi include:
 
@@ -131,7 +131,7 @@ The additional descriptors provided by pdi include:
 * `bleedPrevalence` - Bleed prevalence (%)
 * `agrilusExitHoleDensity` - Agrilus exit hole density (m^-2^)
 
-The additional descriptors can be calculate for the example data using:
+These descriptors can be calculated for the example data using:
 
 ```{r additional_descriptors}
 a <- sa %>%
@@ -153,7 +153,7 @@ a <- sa %>%
   )
 ```
 
-### Random forest
+### Random forest model fitting
 
 ```{r prepare_data_for_rf}
 t <- makeAnalysisTable(a)
