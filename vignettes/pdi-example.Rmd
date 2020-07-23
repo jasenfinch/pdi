@@ -163,6 +163,8 @@ t <- makeAnalysisTable(a)
 m <- rf(t,cls = NULL,nreps = 10)
 ```
 
+* use of supervised vs unsupervised
+
 ### Index calculation
 
 ```{r calculate_DIs}
@@ -180,10 +182,17 @@ ggplot(DIs,aes(x = Status,y = PDI)) +
 
 ### Descriptor contributions
 
+Now the decline indexes have been calculated, we next need to understand the relative contributions of the descriptors to the indexes.
+
+The descriptor contributions to the indexes can be calculated using the mean decrease in accuracy variable importance metric from the fitted random forest models.
+These importance scores can be retrieved using the following:
+
 ```{r contributions}
 descriptor_contributions <- m %>%
   descriptorContributions()
 ```
+
+The relative descriptor contributions can then be plotted using the following code with the higher contributing descriptors at the top of the y axis.
 
 ```{r contributions_plot, fig.height=6,fig.width=5}
 descriptor_contributions %>%
@@ -194,6 +203,10 @@ descriptor_contributions %>%
   theme_bw()
 ```
 
+As can be seen in the plot above, the crown volume descriptor was ranked highest and therefore contributed most to the calculated decline indexes.
+The plot blow shows crown volume plotted against the calculated PDI values for each tree.
+It can be seen that the trees with lower PDI values (healthier) also have greater crown volumes which is what would be expected.
+
 ```{r crown_volume_plot}
 DIs %>%
   bind_cols(a %>%
@@ -202,4 +215,4 @@ DIs %>%
   geom_point() +
   theme_bw()
 ```
-
+* importance of assessing descriptor contributions and associations to/with the decline indexes
