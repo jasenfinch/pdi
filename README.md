@@ -20,7 +20,7 @@ This package provides the tools generate these decline indexes using machine lea
 Install the package from GitHub:
 
 ```
-devtools::install_github('jasenfinch/pdi')
+devtools::install_github('jasenfinch/pdi',build_vignettes = TRUE)
 ```
 
 See the vignette for how to generate a phenotypic decline index (PDI) for oak decline severity using example data:
