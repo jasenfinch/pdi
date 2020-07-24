@@ -1,4 +1,4 @@
-#' mds
+#' Multidimensional scaling
 #' @description perform multidimensional scaling of random forest proximities
 #' @param rfModels list containing random forest models as returned by \code{rf()}
 #' @param dimensions number of dimensions to scale to

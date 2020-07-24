@@ -1,4 +1,4 @@
-#' siteAdjustmentFactors
+#' Site adjustment factors
 #' @description Return site adjustment factors of selected phenotypic descriptors.
 #' @param phenoData phenoData tibble containing phenotype data
 #' @param descriptors columns of phenoData on which calculate site correction factors

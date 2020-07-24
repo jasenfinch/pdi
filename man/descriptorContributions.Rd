@@ -2,7 +2,7 @@
 % Please edit documentation in R/rf.R
 \name{descriptorContributions}
 \alias{descriptorContributions}
-\title{descriptorContributions}
+\title{Descriptor contributions}
 \usage{
 descriptorContributions(rfModels)
 }

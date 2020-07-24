@@ -2,7 +2,7 @@
 % Please edit documentation in R/siteAdjustmentFactors.R
 \name{siteAdjustmentFactors}
 \alias{siteAdjustmentFactors}
-\title{siteAdjustmentFactors}
+\title{Site adjustment factors}
 \usage{
 siteAdjustmentFactors(
   phenoData,

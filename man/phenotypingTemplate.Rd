@@ -2,7 +2,7 @@
 % Please edit documentation in R/phenotypingTemplate.R
 \name{phenotypingTemplate}
 \alias{phenotypingTemplate}
-\title{phenotypingTemplate}
+\title{Phenotyping template}
 \usage{
 phenotypingTemplate(path = ".")
 }

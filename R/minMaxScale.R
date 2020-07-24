@@ -1,4 +1,4 @@
-#' minMaxScale
+#' Min-max scaling
 #' @description Variable min-max scaling.
 #' @param vec vector of numbers to scale
 #' @export

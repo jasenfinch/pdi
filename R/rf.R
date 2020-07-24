@@ -1,5 +1,5 @@
-#' rf
-#' @description perform random forest repetitions
+#' Random forest analysis
+#' @description Perform random forest repetitions.
 #' @param analysisTable tibble of phenotype data suitable for random forest analysis as returned by \code{preparePhenotypeData}
 #' @param cls analysisTable column to use as response vector. NULL for unsupervised analyses.
 #' @param params additional arguments to pass to randomForest::randomForest
@@ -21,7 +21,7 @@ rf <- function(analysisTable, cls, params = list(),nreps = 100, seed = 1234){
   })
 }
 
-#' descriptorContributions
+#' Descriptor contributions
 #' @description Calculate average descriptor contributions to random forest models.
 #' @param rfModels list containing random forest models as returned by \code{rf()}
 #' @details See \code{see ?randomForest::importance} for details on random forest importance metrics.

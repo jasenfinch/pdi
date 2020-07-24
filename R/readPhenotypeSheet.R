@@ -1,5 +1,5 @@
-#' readPhenotypeSheet
-#' @description parse .xls phenotype data collection sheets
+#' Read phenptyping sheet
+#' @description Parse .xlsx phenotype data collection sheets.
 #' @param file file path to excel file to parse
 #' @examples 
 #' files <- list.files(system.file('phenotypeDataCollectionSheets',package = 'pdi'),full.names = TRUE)

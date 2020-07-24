@@ -2,7 +2,7 @@
 % Please edit documentation in R/rf.R
 \name{rf}
 \alias{rf}
-\title{rf}
+\title{Random forest analysis}
 \usage{
 rf(analysisTable, cls, params = list(), nreps = 100, seed = 1234)
 }
@@ -18,5 +18,5 @@ rf(analysisTable, cls, params = list(), nreps = 100, seed = 1234)
 \item{seed}{random number seed}
 }
 \description{
-perform random forest repetitions
+Perform random forest repetitions.
 }

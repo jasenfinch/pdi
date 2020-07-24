@@ -1,4 +1,4 @@
-#' siteAdjustment
+#' Site adjustment
 #' @description Perform a site adjustment of selected descriptors.
 #' @param phenoData phenoData tibble containing phenotype data
 #' @param descriptors columns of phenoData on which to perform site correction

@@ -2,7 +2,7 @@
 % Please edit documentation in R/mds.R
 \name{mds}
 \alias{mds}
-\title{mds}
+\title{Multidimensional scaling}
 \usage{
 mds(rfModels, dimensions = 2)
 }

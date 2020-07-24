@@ -2,7 +2,7 @@
 % Please edit documentation in R/preparePhenotypeData.R
 \name{preparePhenotypeData}
 \alias{preparePhenotypeData}
-\title{preparePhenotypeData}
+\title{Prepare phenotype data}
 \usage{
 preparePhenotypeData(phenotypeData)
 }
@@ -10,5 +10,5 @@ preparePhenotypeData(phenotypeData)
 \item{phenotypeData}{parsed phenotype data collection sheet returned from \code{readPhenotypeSheet}}
 }
 \description{
-process parsed phenotype data sheets into a tibble suitable for random forest analysis
+Process parsed phenotype data sheets into a tibble suitable for random forest analysis.
 }
