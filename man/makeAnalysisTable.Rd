@@ -2,7 +2,7 @@
 % Please edit documentation in R/makeAnalysisTable.R
 \name{makeAnalysisTable}
 \alias{makeAnalysisTable}
-\title{makeAnalysisTable}
+\title{Make analysis table}
 \usage{
 makeAnalysisTable(phenoData)
 }
@@ -10,5 +10,5 @@ makeAnalysisTable(phenoData)
 \item{phenoData}{tibble containing phenotype data}
 }
 \description{
-prepare phenoData table ready for random forest analysis
+prepare data table ready for random forest analysis
 }

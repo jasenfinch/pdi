@@ -1,5 +1,5 @@
-#' makeAnalysisTable
-#' @description prepare phenoData table ready for random forest analysis
+#' Make analysis table
+#' @description prepare data table ready for random forest analysis
 #' @param phenoData tibble containing phenotype data
 #' @importFrom purrr map_dfc
 #' @export

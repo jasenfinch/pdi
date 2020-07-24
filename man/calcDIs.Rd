@@ -4,15 +4,19 @@
 \alias{calcDIs}
 \title{Calculate Decline Indexes}
 \usage{
-calcDIs(rfModels, invertPDI = TRUE, invertDAI = TRUE)
+calcDIs(rfModels, PDI = TRUE, DAI = TRUE, invertPDI = TRUE, invertDAI = TRUE)
 }
 \arguments{
-\item{rfModels}{list containing random forest models}
+\item{rfModels}{list containing random forest models as returned by \code{rf()}}
 
-\item{invertPDI}{invert the PDI scale? TRUE/FALSE}
+\item{PDI}{TRUE/FALSE, calculate PDI?}
 
-\item{invertDAI}{invert the DAI scale? TRUE/FALSE}
+\item{DAI}{TRUE/FALSE, calculate DAI?}
+
+\item{invertPDI}{invert the PDI scale? TRUE/FALSE. Ignored if argument PDI is FALSE}
+
+\item{invertDAI}{invert the DAI scale? TRUE/FALSE. Ignored if argument DAI is FALSE}
 }
 \description{
-Calculate Phenotypic Decline Index (PDI) and Decline Acuteness Index (DAI)
+Calculate Phenotypic Decline Index (PDI) and Decline Acuteness Index (DAI).
 }

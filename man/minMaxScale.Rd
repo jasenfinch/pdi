@@ -2,7 +2,7 @@
 % Please edit documentation in R/minMaxScale.R
 \name{minMaxScale}
 \alias{minMaxScale}
-\title{minMaxScale}
+\title{Min-max scaling}
 \usage{
 minMaxScale(vec)
 }

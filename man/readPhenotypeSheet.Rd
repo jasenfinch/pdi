@@ -2,7 +2,7 @@
 % Please edit documentation in R/readPhenotypeSheet.R
 \name{readPhenotypeSheet}
 \alias{readPhenotypeSheet}
-\title{readPhenotypeSheet}
+\title{Read phenptyping sheet}
 \usage{
 readPhenotypeSheet(file)
 }
@@ -10,7 +10,7 @@ readPhenotypeSheet(file)
 \item{file}{file path to excel file to parse}
 }
 \description{
-parse .xls phenotype data collection sheets
+Parse .xlsx phenotype data collection sheets.
 }
 \examples{
 files <- list.files(system.file('phenotypeDataCollectionSheets',package = 'pdi'),full.names = TRUE)

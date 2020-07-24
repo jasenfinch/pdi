@@ -1,10 +1,10 @@
-#' siteCorrectionFactors
-#' @description return site correction correction factors of selected descriptors
+#' Site adjustment factors
+#' @description Return site adjustment factors of selected phenotypic descriptors.
 #' @param phenoData phenoData tibble containing phenotype data
 #' @param descriptors columns of phenoData on which calculate site correction factors
 #' @export
 
-siteCorrectionFactors <- function(phenoData,descriptors = c("Diameter at breast height (m)",
+siteAdjustmentFactors <- function(phenoData,descriptors = c("Diameter at breast height (m)",
                                                             "Lower crown height (m)",
                                                             "Timber height (m)",
                                                             "Total height (m)",
@@ -21,14 +21,14 @@ siteCorrectionFactors <- function(phenoData,descriptors = c("Diameter at breast 
   siteCorrections <- siteCorrect %>%
     group_by(Location,Descriptor) %>%
     summarise(Mean = mean(Value)) %>%
-    tbl_df() %>%
+    ungroup() %>%
     split(.$Descriptor) %>%
     map(~{
       d <- .
       d %>%
-        mutate(Correction = Mean - ({overallMeans %>% filter(Descriptor == d$Descriptor[1]) %>% .$Mean}))
+        mutate(Adjustment = Mean - ({overallMeans %>% filter(Descriptor == d$Descriptor[1]) %>% .$Mean}))
     }) %>%
     bind_rows() %>%
-    select(Descriptor,Location,Mean,Correction)
+    select(Descriptor,Location,Mean,Adjustment)
   return(siteCorrections)
 }

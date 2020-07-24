@@ -2,19 +2,21 @@
 % Please edit documentation in R/rf.R
 \name{rf}
 \alias{rf}
-\title{rf}
+\title{Random forest analysis}
 \usage{
-rf(analysisTable, cls, nreps = 100, seed = 1234)
+rf(analysisTable, cls, params = list(), nreps = 100, seed = 1234)
 }
 \arguments{
 \item{analysisTable}{tibble of phenotype data suitable for random forest analysis as returned by \code{preparePhenotypeData}}
 
 \item{cls}{analysisTable column to use as response vector. NULL for unsupervised analyses.}
 
+\item{params}{additional arguments to pass to randomForest::randomForest}
+
 \item{nreps}{number of repetitions}
 
 \item{seed}{random number seed}
 }
 \description{
-perform random forest repetitions
+Perform random forest repetitions.
 }

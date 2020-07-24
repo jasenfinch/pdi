@@ -4,3 +4,7 @@
 ^appveyor\.yml$
 ^codecov\.yml$
 LICENSE
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$

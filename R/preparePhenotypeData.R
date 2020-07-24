@@ -1,8 +1,8 @@
-#' preparePhenotypeData
-#' @description process parsed phenotype data sheets into a tibble suitable for random forest analysis
+#' Prepare phenotype data
+#' @description Process parsed phenotype data sheets into a tibble suitable for random forest analysis.
 #' @param phenotypeData parsed phenotype data collection sheet returned from \code{readPhenotypeSheet}
 #' @importFrom tidyr spread
-#' @importFrom dplyr filter group_by mutate summarise tbl_df rename left_join mutate_at vars rename_at everything
+#' @importFrom dplyr filter group_by mutate summarise tbl_df rename left_join mutate_at vars rename_at everything ungroup
 #' @importFrom tidyselect contains
 #' @importFrom stringr coll str_replace
 #' @export
@@ -27,14 +27,14 @@ preparePhenotypeData <- function(phenotypeData){
   deadTissue <- cardinalAssessments %>%
     group_by(ID) %>%
     summarise(`Dead Stem Tissue` = 'Hollow' %in% `Tap test`)
-  deadTissue$`Dead Stem Tissue`[deadTissue$`Dead Stem Tissue` == T] <- 'present'
-  deadTissue$`Dead Stem Tissue`[deadTissue$`Dead Stem Tissue` == F] <- 'absent'
+  deadTissue$`Dead Stem Tissue`[deadTissue$`Dead Stem Tissue` == TRUE] <- 'present'
+  deadTissue$`Dead Stem Tissue`[deadTissue$`Dead Stem Tissue` == FALSE] <- 'absent'
   
   canopyClosure <- cardinalAssessments %>%
     group_by(ID) %>%
     summarise(`Canopy Closure` = 'Y' %in% `Canopy closure`)
-  canopyClosure$`Canopy Closure`[canopyClosure$`Canopy Closure` == T] <- 'present'
-  canopyClosure$`Canopy Closure`[canopyClosure$`Canopy Closure` == F] <- 'absent'
+  canopyClosure$`Canopy Closure`[canopyClosure$`Canopy Closure` == TRUE] <- 'present'
+  canopyClosure$`Canopy Closure`[canopyClosure$`Canopy Closure` == FALSE] <- 'absent'
   
   symptoms <- phenotypeData %>%
     .$Symptoms
@@ -47,18 +47,18 @@ preparePhenotypeData <- function(phenotypeData){
     group_by(ID,`Symptom Type`) %>%
     summarise(Count = sum(Length)) %>%
     spread(`Symptom Type`,Count) %>%
-    tbl_df() %>%
+    ungroup() %>%
     mutate(ID = as.numeric(ID))
   
   
   averageCrackLength <- symptoms %>%
     group_by(ID,`Symptom Type`) %>%
-    summarise(`Average Crack Length` = mean(Length,na.rm = T)) %>%
+    summarise(`Average Crack Length` = mean(Length,na.rm = TRUE)) %>%
     spread(`Symptom Type`,`Average Crack Length`) %>%
     rename(`Average Active Bleed Length` = `Active bleeds`,
            `Average Black Staining Length` = `Black staining`,
            `Average Calloused Wound Length` = `Calloused wound`) %>%
-    tbl_df() %>%
+    ungroup() %>%
     mutate(ID = as.numeric(ID))
   
   description <- description %>%
