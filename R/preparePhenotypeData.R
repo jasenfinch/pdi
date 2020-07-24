@@ -27,14 +27,14 @@ preparePhenotypeData <- function(phenotypeData){
   deadTissue <- cardinalAssessments %>%
     group_by(ID) %>%
     summarise(`Dead Stem Tissue` = 'Hollow' %in% `Tap test`)
-  deadTissue$`Dead Stem Tissue`[deadTissue$`Dead Stem Tissue` == T] <- 'present'
-  deadTissue$`Dead Stem Tissue`[deadTissue$`Dead Stem Tissue` == F] <- 'absent'
+  deadTissue$`Dead Stem Tissue`[deadTissue$`Dead Stem Tissue` == TRUE] <- 'present'
+  deadTissue$`Dead Stem Tissue`[deadTissue$`Dead Stem Tissue` == FALSE] <- 'absent'
   
   canopyClosure <- cardinalAssessments %>%
     group_by(ID) %>%
     summarise(`Canopy Closure` = 'Y' %in% `Canopy closure`)
-  canopyClosure$`Canopy Closure`[canopyClosure$`Canopy Closure` == T] <- 'present'
-  canopyClosure$`Canopy Closure`[canopyClosure$`Canopy Closure` == F] <- 'absent'
+  canopyClosure$`Canopy Closure`[canopyClosure$`Canopy Closure` == TRUE] <- 'present'
+  canopyClosure$`Canopy Closure`[canopyClosure$`Canopy Closure` == FALSE] <- 'absent'
   
   symptoms <- phenotypeData %>%
     .$Symptoms
@@ -53,7 +53,7 @@ preparePhenotypeData <- function(phenotypeData){
   
   averageCrackLength <- symptoms %>%
     group_by(ID,`Symptom Type`) %>%
-    summarise(`Average Crack Length` = mean(Length,na.rm = T)) %>%
+    summarise(`Average Crack Length` = mean(Length,na.rm = TRUE)) %>%
     spread(`Symptom Type`,`Average Crack Length`) %>%
     rename(`Average Active Bleed Length` = `Active bleeds`,
            `Average Black Staining Length` = `Black staining`,

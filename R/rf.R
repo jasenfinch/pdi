@@ -12,11 +12,11 @@
 rf <- function(analysisTable, cls, params = list(),nreps = 100, seed = 1234){
   set.seed(seed)
 
-  map(1:nreps,~{
+  map(seq(1,nreps),~{
     p <- formals(randomForest::randomForest)
     p$x <- analysisTable
     p$y <- cls
-    p <- c(p,params,list(proximity = T,importance  = TRUE))
+    p <- c(p,params,list(proximity = TRUE,importance  = TRUE))
     do.call(randomForest::randomForest,p)
   })
 }
@@ -39,7 +39,7 @@ descriptorContributions <- function(rfModels){
         as_tibble() %>%
         rename(Descriptor = rowname)
     }) %>%
-    set_names(1:length(.) %>%
+    set_names(seq(1,length(.)) %>%
                 as.character()) %>%
     bind_rows(.id = 'rep') %>%
     group_by(Descriptor) %>%

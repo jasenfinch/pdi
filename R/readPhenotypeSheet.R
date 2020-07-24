@@ -17,11 +17,11 @@ readPhenotypeSheet <- function(file){
   suppressWarnings(suppressMessages(symptoms <- read_excel(file,sheet = 'Symptoms')))
   
   location <- description[1,2] %>%
-    unlist(use.names = F)
+    unlist(use.names = FALSE)
   surveyor <- description[2,2] %>%
-    unlist(use.names = F)
+    unlist(use.names = FALSE)
   date <- description[1,6] %>%
-    unlist(use.names = F)
+    unlist(use.names = FALSE)
   
   emptyRows <- is.na(description$Description)
   
@@ -52,13 +52,13 @@ readPhenotypeSheet <- function(file){
   description$Value[description$Descriptor == 'Symptomatic'] <- description$Value[description$Descriptor == 'Symptomatic'] %>% toupper()
   
   directions <- directionObservations[1,] %>%
-    unlist(use.names = F) %>%
+    unlist(use.names = FALSE) %>%
     na.omit() %>%
     toupper()
   
   directionObservations <- directionObservations[-1,]
   
-  directionObservations <- split(1:20,ceiling(seq_along(1:20)/5)) %>%
+  directionObservations <- split(seq(1,20),ceiling(seq_along(1:20)/5)) %>%
     map(~{
       d <- directionObservations[,.]
       colnames(d) <- d[1,]
@@ -78,8 +78,8 @@ readPhenotypeSheet <- function(file){
   
   directionObservations$Descriptor[directionObservations$Descriptor == "Canopy closure (Y/N)"] <- 'Canopy closure'
   
-  symptoms <- symptoms[-(1:2),]
-  symptoms <- split(1:ncol(symptoms),ceiling(seq_along(1:ncol(symptoms))/3)) %>%
+  symptoms <- symptoms[-(seq(1,2)),]
+  symptoms <- split(seq(1,ncol(symptoms)),ceiling(seq_along(seq(1,ncol(symptoms)))/3)) %>%
     map(~{
       s <- symptoms[,.]
       colnames(s) <- s[1,]
@@ -88,7 +88,7 @@ readPhenotypeSheet <- function(file){
         rowid_to_column(var = 'Crack No')
       return(s)
     })
-  names(symptoms) <- description$ID[1:length(symptoms)] %>%
+  names(symptoms) <- description$ID[seq(1,length(symptoms))] %>%
     unique()
   
   suppressWarnings(
