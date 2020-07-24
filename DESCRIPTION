@@ -2,9 +2,9 @@ Package: pdi
 Type: Package
 Title: Phenotypic Index Measures For Oak Decline Severity
 Version: 0.3.3
-Authors@R: person("Jasen", "Finch", email = "jsf9@aber.ac.uk", role = c("aut", "cre"))
+Authors@R: person("Jasen", "Finch", email = "jsf9@aber.ac.uk", role = c("aut", "cre"),  comment = c(ORCID = "0000-0002-6070-7476"))
 Description: Oak declines are complex disease syndromes that consist of many visual indicators that include aspects of tree size, crown condition and trunk condition. This can cause difficulty in the manual classification of symptomatic and non-symptomatic trees from what is in reality a broad spectrum of oak tree health condition. Two oak decline indexes have been developed to quantitatively describe and differentiate oak decline syndromes in *Quercus robur*. This package provides the tools generate these decline indexes using machine learning algorithm random forest.
-URL: https://jasenfinch.github.io/pdi/
+URL: https://jasenfinch.github.io/pdi
 License: GPL-3
 Encoding: UTF-8
 Imports: dplyr,
