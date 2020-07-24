@@ -5,7 +5,7 @@
 [![CRAN](https://www.r-pkg.org/badges/version/pdi)](https://cran.r-project.org/web/packages/pdi/index.html)
 ![downloads](https://cranlogs.r-pkg.org/badges/pdi)
 
-### Phenotypic based index measures for oak decline severity
+> **Phenotypic index measures for oak decline severity**
 
 Oak declines are complex disease syndromes that consist of many visual indicators that include aspects of tree size, crown condition and trunk condition. This can cause difficulty in the manual classification of symptomatic and non-symptomatic trees from what is in reality a broad spectrum of oak tree health condition.
 
