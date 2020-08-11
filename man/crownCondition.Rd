@@ -14,3 +14,6 @@ crownCondition(m, t)
 \description{
 Calculate crown condition (\%).
 }
+\examples{
+crownCondition(50,60)
+}

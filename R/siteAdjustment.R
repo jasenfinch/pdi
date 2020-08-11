@@ -2,6 +2,18 @@
 #' @description Perform a site adjustment of selected descriptors.
 #' @param phenoData phenoData tibble containing phenotype data
 #' @param descriptors columns of phenoData on which to perform site correction
+#' @examples 
+#' library(dplyr)
+#' 
+#' ## Retrieve file paths for example data
+#' files <- list.files(system.file('phenotypeDataCollectionSheets',
+#'   package = 'pdi'),full.names = TRUE)
+#' 
+#' ## Prepare data
+#' d <- map(files,readPhenotypeSheet) %>%
+#'   map(preparePhenotypeData) %>%
+#'   bind_rows() %>%
+#'   siteAdjustment() 
 #' @export
 
 siteAdjustment <- function(phenoData,descriptors = c("Diameter at breast height (m)",

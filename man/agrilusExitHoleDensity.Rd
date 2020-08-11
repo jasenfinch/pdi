@@ -16,3 +16,6 @@ agrilusExitHoleDensity(n, d, s = 2)
 \description{
 Calculate Agrilus biguttatus exit hole density.
 }
+\examples{
+agrilusExitHoleDensity(2,1.02,1.3)
+}

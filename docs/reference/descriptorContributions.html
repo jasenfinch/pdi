@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pdi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -144,6 +144,42 @@
 
     <p>See <code>see ?randomForest::importance</code> for details on random forest importance metrics.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+
+<span class='co'>## Retrieve file paths for example data</span>
+<span class='no'>files</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'phenotypeDataCollectionSheets'</span>,
+  <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'pdi'</span>),<span class='kw'>full.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'>## Prepare data</span>
+<span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>files</span>,<span class='no'>readPhenotypeSheet</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>preparePhenotypeData</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='siteAdjustment.html'>siteAdjustment</a></span>() <span class='kw'>%&gt;%</span>
+   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>`Live crown ratio (%)`</span> <span class='kw'>=</span> <span class='fu'><a href='liveCrownRatio.html'>liveCrownRatio</a></span>(<span class='no'>`Total height (m)`</span>,
+     <span class='no'>`Lower crown height (m)`</span>),
+     <span class='kw'>`Crown condition (%)`</span> <span class='kw'>=</span> <span class='fu'><a href='crownCondition.html'>crownCondition</a></span>(<span class='no'>`Missing crown (%)`</span>,
+                               <span class='no'>`Crown transparency (%)`</span>),
+     <span class='kw'>`Crown volume (m^3)`</span> <span class='kw'>=</span> <span class='fu'><a href='crownVolume.html'>crownVolume</a></span>(<span class='no'>`Crown radius (m)`</span>,
+                               <span class='no'>`Total height (m)`</span>,
+                               <span class='no'>`Lower crown height (m)`</span>,
+                               <span class='no'>`Crown condition (%)`</span>),
+     <span class='kw'>`Bleed prevalence (%)`</span> <span class='kw'>=</span> <span class='fu'><a href='bleedPrevalence.html'>bleedPrevalence</a></span>(<span class='no'>`Active bleed length (mm)`</span>,
+                               <span class='no'>`Active bleeds`</span>,
+                               <span class='no'>`Black staining length (mm)`</span>,
+                               <span class='no'>`Black staining`</span>,
+                               <span class='no'>`Diameter at breast height (m)`</span>),
+     <span class='kw'>`Agrilus exit hole density (m^-2)`</span> <span class='kw'>=</span> <span class='fu'><a href='agrilusExitHoleDensity.html'>agrilusExitHoleDensity</a></span>(<span class='no'>`Agrilus exit holes`</span>,
+                               <span class='no'>`Diameter at breast height (m)`</span>)
+)
+
+<span class='no'>t</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='makeAnalysisTable.html'>makeAnalysisTable</a></span>(<span class='no'>d</span>)
+
+<span class='co'>## Generate random forest models</span>
+<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rf.html'>rf</a></span>(<span class='no'>t</span>,<span class='kw'>cls</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,<span class='kw'>nreps</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+
+<span class='no'>descriptor_contributions</span> <span class='kw'>&lt;-</span> <span class='no'>m</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>descriptorContributions</span>()</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

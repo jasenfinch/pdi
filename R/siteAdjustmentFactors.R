@@ -2,6 +2,20 @@
 #' @description Return site adjustment factors of selected phenotypic descriptors.
 #' @param phenoData phenoData tibble containing phenotype data
 #' @param descriptors columns of phenoData on which calculate site correction factors
+#' @examples 
+#' library(dplyr)
+#' 
+#' ## Retrieve file paths for example data
+#' files <- list.files(system.file('phenotypeDataCollectionSheets',
+#'   package = 'pdi'),full.names = TRUE)
+#' 
+#' ## Prepare data
+#' d <- map(files,readPhenotypeSheet) %>%
+#'   map(preparePhenotypeData) %>%
+#'   bind_rows() %>%
+#'   siteAdjustment()
+#'
+#' sa_factors <- siteAdjustmentFactors(d)
 #' @export
 
 siteAdjustmentFactors <- function(phenoData,descriptors = c("Diameter at breast height (m)",

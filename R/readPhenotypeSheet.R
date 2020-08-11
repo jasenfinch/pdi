@@ -2,7 +2,13 @@
 #' @description Parse .xlsx phenotype data collection sheets.
 #' @param file file path to excel file to parse
 #' @examples 
-#' files <- list.files(system.file('phenotypeDataCollectionSheets',package = 'pdi'),full.names = TRUE)
+#' library(dplyr)
+#' 
+#' ## Retrieve file paths for example data
+#' files <- list.files(system.file('phenotypeDataCollectionSheets',
+#'   package = 'pdi'),full.names = TRUE)
+#' 
+#' ## Prepare data
 #' d <- readPhenotypeSheet(files[1])
 #' @importFrom readxl read_excel
 #' @importFrom tibble rowid_to_column

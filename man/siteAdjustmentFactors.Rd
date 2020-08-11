@@ -18,3 +18,18 @@ siteAdjustmentFactors(
 \description{
 Return site adjustment factors of selected phenotypic descriptors.
 }
+\examples{
+library(dplyr)
+
+## Retrieve file paths for example data
+files <- list.files(system.file('phenotypeDataCollectionSheets',
+  package = 'pdi'),full.names = TRUE)
+
+## Prepare data
+d <- map(files,readPhenotypeSheet) \%>\%
+  map(preparePhenotypeData) \%>\%
+  bind_rows() \%>\%
+  siteAdjustment()
+
+sa_factors <- siteAdjustmentFactors(d)
+}

@@ -18,3 +18,6 @@ crownVolume(r, h, l, c)
 \description{
 Calculate estimated crown volume.
 }
+\examples{
+crownVolume(3,15,10,50)
+}

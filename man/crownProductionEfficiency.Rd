@@ -14,3 +14,6 @@ crownProductionEfficiency(crown_surface_area, crown_volume)
 \description{
 Calculate the crown production efficiency
 }
+\examples{
+crownProductionEfficiency(34,35)
+}

@@ -5,6 +5,39 @@
 #' @param params additional arguments to pass to randomForest::randomForest
 #' @param nreps number of repetitions
 #' @param seed random number seed
+#' @examples 
+#' library(dplyr)
+#' 
+#' ## Retrieve file paths for example data
+#' files <- list.files(system.file('phenotypeDataCollectionSheets',
+#'   package = 'pdi'),full.names = TRUE)
+#' 
+#' ## Prepare data
+#' d <- map(files,readPhenotypeSheet) %>%
+#'   map(preparePhenotypeData) %>%
+#'   bind_rows() %>%
+#'   siteAdjustment() %>%
+#'    mutate(`Live crown ratio (%)` = liveCrownRatio(`Total height (m)`,
+#'      `Lower crown height (m)`),
+#'      `Crown condition (%)` = crownCondition(`Missing crown (%)`,
+#'                                `Crown transparency (%)`),
+#'      `Crown volume (m^3)` = crownVolume(`Crown radius (m)`,
+#'                                `Total height (m)`,
+#'                                `Lower crown height (m)`,
+#'                                `Crown condition (%)`),
+#'      `Bleed prevalence (%)` = bleedPrevalence(`Active bleed length (mm)`,
+#'                                `Active bleeds`,
+#'                                `Black staining length (mm)`,
+#'                                `Black staining`,
+#'                                `Diameter at breast height (m)`),
+#'      `Agrilus exit hole density (m^-2)` = agrilusExitHoleDensity(`Agrilus exit holes`,
+#'                                `Diameter at breast height (m)`)
+#' )
+#' 
+#' t <- makeAnalysisTable(d)
+#' 
+#' ## Generate random forest models
+#' m <- rf(t,cls = NULL,nreps = 10)
 #' @importFrom randomForest randomForest
 #' @importFrom magrittr set_names
 #' @export
@@ -25,6 +58,42 @@ rf <- function(analysisTable, cls, params = list(),nreps = 100, seed = 1234){
 #' @description Calculate average descriptor contributions to random forest models.
 #' @param rfModels list containing random forest models as returned by \code{rf()}
 #' @details See \code{see ?randomForest::importance} for details on random forest importance metrics.
+#' @examples 
+#' library(dplyr)
+#' 
+#' ## Retrieve file paths for example data
+#' files <- list.files(system.file('phenotypeDataCollectionSheets',
+#'   package = 'pdi'),full.names = TRUE)
+#' 
+#' ## Prepare data
+#' d <- map(files,readPhenotypeSheet) %>%
+#'   map(preparePhenotypeData) %>%
+#'   bind_rows() %>%
+#'   siteAdjustment() %>%
+#'    mutate(`Live crown ratio (%)` = liveCrownRatio(`Total height (m)`,
+#'      `Lower crown height (m)`),
+#'      `Crown condition (%)` = crownCondition(`Missing crown (%)`,
+#'                                `Crown transparency (%)`),
+#'      `Crown volume (m^3)` = crownVolume(`Crown radius (m)`,
+#'                                `Total height (m)`,
+#'                                `Lower crown height (m)`,
+#'                                `Crown condition (%)`),
+#'      `Bleed prevalence (%)` = bleedPrevalence(`Active bleed length (mm)`,
+#'                                `Active bleeds`,
+#'                                `Black staining length (mm)`,
+#'                                `Black staining`,
+#'                                `Diameter at breast height (m)`),
+#'      `Agrilus exit hole density (m^-2)` = agrilusExitHoleDensity(`Agrilus exit holes`,
+#'                                `Diameter at breast height (m)`)
+#' )
+#' 
+#' t <- makeAnalysisTable(d)
+#' 
+#' ## Generate random forest models
+#' m <- rf(t,cls = NULL,nreps = 10)
+#' 
+#' descriptor_contributions <- m %>%
+#'   descriptorContributions()
 #' @importFrom randomForest importance
 #' @importFrom dplyr summarise_all
 #' @export

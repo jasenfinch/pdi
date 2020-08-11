@@ -12,3 +12,10 @@ minMaxScale(vec)
 \description{
 Variable min-max scaling.
 }
+\examples{
+set.seed(1234)
+
+d <- runif(20,1,10)
+
+minMaxScale(d)
+}

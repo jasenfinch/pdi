@@ -12,3 +12,8 @@ phenotypingTemplate(path = ".")
 \description{
 Export a copy of the oak phenotyping data collection spreadsheet.
 }
+\examples{
+\dontrun{
+phenotypingTemplate()
+}
+}

@@ -18,3 +18,16 @@ siteAdjustment(
 \description{
 Perform a site adjustment of selected descriptors.
 }
+\examples{
+library(dplyr)
+
+## Retrieve file paths for example data
+files <- list.files(system.file('phenotypeDataCollectionSheets',
+  package = 'pdi'),full.names = TRUE)
+
+## Prepare data
+d <- map(files,readPhenotypeSheet) \%>\%
+  map(preparePhenotypeData) \%>\%
+  bind_rows() \%>\%
+  siteAdjustment() 
+}
