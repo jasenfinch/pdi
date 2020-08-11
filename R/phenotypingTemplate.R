@@ -2,7 +2,9 @@
 #' @description Export a copy of the oak phenotyping data collection spreadsheet.
 #' @param path directory path for export output
 #' @examples 
+#' \dontrun{
 #' phenotypingTemplate()
+#' }
 #' @export
 
 phenotypingTemplate <- function(path = '.'){
