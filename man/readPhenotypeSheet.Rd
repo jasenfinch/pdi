@@ -13,6 +13,12 @@ readPhenotypeSheet(file)
 Parse .xlsx phenotype data collection sheets.
 }
 \examples{
-files <- list.files(system.file('phenotypeDataCollectionSheets',package = 'pdi'),full.names = TRUE)
+library(dplyr)
+
+## Retrieve file paths for example data
+files <- list.files(system.file('phenotypeDataCollectionSheets',
+  package = 'pdi'),full.names = TRUE)
+
+## Prepare data
 d <- readPhenotypeSheet(files[1])
 }

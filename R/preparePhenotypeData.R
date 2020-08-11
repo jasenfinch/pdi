@@ -1,6 +1,16 @@
 #' Prepare phenotype data
 #' @description Process parsed phenotype data sheets into a tibble suitable for random forest analysis.
 #' @param phenotypeData parsed phenotype data collection sheet returned from \code{readPhenotypeSheet}
+#' @examples 
+#' library(dplyr)
+#' 
+#' ## Retrieve file paths for example data
+#' files <- list.files(system.file('phenotypeDataCollectionSheets',
+#'   package = 'pdi'),full.names = TRUE)
+#' 
+#' ## Prepare data
+#' d <- map(files,readPhenotypeSheet) %>%
+#'   map(preparePhenotypeData)
 #' @importFrom tidyr spread
 #' @importFrom dplyr filter group_by mutate summarise tbl_df rename left_join mutate_at vars rename_at everything ungroup
 #' @importFrom tidyselect contains
