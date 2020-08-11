@@ -14,3 +14,6 @@ liveCrownRatio(h, l)
 \description{
 Calculate the live crown ratio
 }
+\examples{
+liveCrownRatio(15,10)
+}

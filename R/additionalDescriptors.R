@@ -2,6 +2,8 @@
 #' @description Calculate crown condition (\%).
 #' @param m missing crown (\%)
 #' @param t crown transparency (\%)
+#' @examples 
+#' crownCondition(50,60)
 #' @export
 
 crownCondition <- function(m,t) {
@@ -14,6 +16,8 @@ crownCondition <- function(m,t) {
 #' @param h total height (m)
 #' @param l lower crown height (m)
 #' @param c crown condition (\%)
+#' @examples 
+#' crownVolume(3,15,10,50)
 #' @export
 
 crownVolume <- function(r,h,l,c) {
@@ -24,10 +28,12 @@ crownVolume <- function(r,h,l,c) {
 #' @description Calculate estimated bleed prevalence.
 #' @param a average active bleed size (mm)
 #' @param A number of active bleeds
-#' @param b average black stain size
+#' @param b average black stain size (mm)
 #' @param B number of black stains
 #' @param d diameter at breast height (m)
 #' @param s height to which stem surveyed from the tree base (m)
+#' @examples 
+#' bleedPrevalence(30,10,40,5,1,1.3)
 #' @export
 
 bleedPrevalence <- function(a,A,b,B,d,s = 3) {
@@ -42,6 +48,8 @@ bleedPrevalence <- function(a,A,b,B,d,s = 3) {
 #' @param n number of Agrilus exit holes
 #' @param d diameter at breast height (m)
 #' @param s height to which stem surveyed from the tree base (m)
+#' @examples 
+#' agrilusExitHoleDensity(2,1.02,1.3)
 #' @export
 
 agrilusExitHoleDensity <- function(n,d,s = 2) {
@@ -52,6 +60,8 @@ agrilusExitHoleDensity <- function(n,d,s = 2) {
 #' @description Calculate the live crown ratio
 #' @param h total height (m)
 #' @param l lower crown height (m)
+#' @examples 
+#' liveCrownRatio(15,10)
 #' @export
 
 liveCrownRatio <- function(h,l){
@@ -64,6 +74,8 @@ liveCrownRatio <- function(h,l){
 #' @param h total height (m)
 #' @param l lower crown height (m)
 #' @param c crown condition (\%)
+#' @examples 
+#' crownSurfaceArea(3,15,10,50)
 #' @export
 
 crownSurfaceArea <- function(r,h,l,c){
@@ -75,6 +87,8 @@ crownSurfaceArea <- function(r,h,l,c){
 #' @description Calculate the crown production efficiency
 #' @param crown_surface_area crown surface area (m^2)
 #' @param crown_volume crown volume (m^3)
+#' @examples 
+#' crownProductionEfficiency(34,35)
 #' @export
 
 crownProductionEfficiency <- function(crown_surface_area,crown_volume){

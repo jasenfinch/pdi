@@ -18,3 +18,6 @@ crownSurfaceArea(r, h, l, c)
 \description{
 Calculate the crown surface area
 }
+\examples{
+crownSurfaceArea(3,15,10,50)
+}

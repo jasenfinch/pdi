@@ -11,7 +11,7 @@ bleedPrevalence(a, A, b, B, d, s = 3)
 
 \item{A}{number of active bleeds}
 
-\item{b}{average black stain size}
+\item{b}{average black stain size (mm)}
 
 \item{B}{number of black stains}
 
@@ -21,4 +21,7 @@ bleedPrevalence(a, A, b, B, d, s = 3)
 }
 \description{
 Calculate estimated bleed prevalence.
+}
+\examples{
+bleedPrevalence(30,10,40,5,1,1.3)
 }
