@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pdi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -99,11 +99,14 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jasenfinch/pdi/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -129,11 +132,11 @@
     <p>Return site adjustment factors of selected phenotypic descriptors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>siteAdjustmentFactors</span>(
-  <span class='no'>phenoData</span>,
-  <span class='kw'>descriptors</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Diameter at breast height (m)"</span>, <span class='st'>"Lower crown height (m)"</span>,
-    <span class='st'>"Timber height (m)"</span>, <span class='st'>"Total height (m)"</span>, <span class='st'>"Crown radius (m)"</span>)
-)</pre>
+    <pre class="usage"><span class='fu'>siteAdjustmentFactors</span><span class='op'>(</span>
+  <span class='va'>phenoData</span>,
+  descriptors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Diameter at breast height (m)"</span>, <span class='st'>"Lower crown height (m)"</span>,
+    <span class='st'>"Timber height (m)"</span>, <span class='st'>"Total height (m)"</span>, <span class='st'>"Crown radius (m)"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -150,19 +153,20 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
 
 <span class='co'>## Retrieve file paths for example data</span>
-<span class='no'>files</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'phenotypeDataCollectionSheets'</span>,
-  <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'pdi'</span>),<span class='kw'>full.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='va'>files</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>'phenotypeDataCollectionSheets'</span>,
+  package <span class='op'>=</span> <span class='st'>'pdi'</span><span class='op'>)</span>,full.names <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'>## Prepare data</span>
-<span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>files</span>,<span class='no'>readPhenotypeSheet</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>preparePhenotypeData</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='siteAdjustment.html'>siteAdjustment</a></span>()
+<span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span><span class='va'>files</span>,<span class='va'>readPhenotypeSheet</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span><span class='va'>preparePhenotypeData</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='siteAdjustment.html'>siteAdjustment</a></span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='no'>sa_factors</span> <span class='kw'>&lt;-</span> <span class='fu'>siteAdjustmentFactors</span>(<span class='no'>d</span>)</div></pre>
+<span class='va'>sa_factors</span> <span class='op'>&lt;-</span> <span class='fu'>siteAdjustmentFactors</span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -178,7 +182,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
