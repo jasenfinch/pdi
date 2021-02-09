@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -62,7 +62,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/jasenfinch/pdi/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -76,7 +76,7 @@
 
       
 
-      </header><script src="pdi-example_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="pdi-example_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Generating phenotypic decline indexes using the pdi package</h1>
@@ -99,24 +99,30 @@
 <li><p><strong>Phenotypic Decline Index (PDI)</strong> - a measure of overall decline severity, scoring trees between 0 and 1. More severely declining oak trees having a score closer to 1.</p></li>
 <li><p><strong>Decline Acuteness Index (DAI)</strong> - a measure to differentiate between Chronic Oak Decline (COD) and Acute Oak Decline with a score between -1 and 1. Acutely declining trees having a score closer to 1 and chronically declining trees having a score closer to -1.</p></li>
 </ul>
+<p>For more information on the methodology behind generating these decline indexes, see the article:</p>
+<p><a href="https://www.sciencedirect.com/science/article/pii/S0378112721000372">Finch, J.P., Brown, N., Beckmann, M., Denman, S. and Draper, J., 2021. Index measures for oak decline severity using phenotypic descriptors. Forest Ecology and Management, 485, p.118948.</a></p>
 <p>This vignette will provide an example framework of how to generate these decline indexes based on the machine learning algorithm random forest, using an example set of phenotypic descriptors.</p>
 <p>To begin, load the package:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">pdi</span>)</pre></body></html></div>
-<p>The following example example will also make use the dplyr package for data manipulation, ggplot2 for visualisation and the pipe (<code><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></code>) from the magrittr package. The additionally required packages can be loaded using:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jasenfinch.github.io/pdi">pdi</a></span><span class="op">)</span></code></pre></div>
+<p>The following example example will also make use the dplyr package for data manipulation, ggplot2 for visualisation and the pipe (<code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code>) from the magrittr package. The additionally required packages can be loaded using:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="example-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-data" class="anchor"></a>Example Data</h2>
 <p>For this example, we will be using phenotypic data provided within the package. This consists of data collected from two woodlands each with 20 oak trees surveyed. The trees were manually assigned an oak decline status with 10 decline symptomatic and 10 decline non-symptomatic trees at each site.</p>
 <p>The file paths for the example data can be retrieved with the following:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">files</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span>(
-  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">'phenotypeDataCollectionSheets'</span>,
-              <span class="kw">package</span> <span class="kw">=</span> <span class="st">'pdi'</span>),
-  <span class="kw">full.names</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">'phenotypeDataCollectionSheets'</span>,
+              package <span class="op">=</span> <span class="st">'pdi'</span><span class="op">)</span>,
+  full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </code></pre></div>
 <p>For collecting further data, a clean copy of the phenotyping data collection sheet template can be exported using:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="../reference/phenotypingTemplate.html">phenotypingTemplate</a></span>(<span class="kw">path</span> <span class="kw">=</span> <span class="st">'.'</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/phenotypingTemplate.html">phenotypingTemplate</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">'.'</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="index-generation" class="section level2">
 <h2 class="hasAnchor">
@@ -126,12 +132,15 @@
 <a href="#data-preparation" class="anchor"></a>Data preparation</h3>
 <p>There are several steps involved the initial preparation of the example phenotypic data collection sheets.</p>
 <p>Firstly, the sheets can be parsed to give a list object containing the raw data for each site using:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">d</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(<span class="no">files</span>,<span class="no">readPhenotypeSheet</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">files</span>,<span class="va">readPhenotypeSheet</span><span class="op">)</span></code></pre></div>
 <p>These can then be assembled into a single tibble with the following:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(<span class="no">d</span>,<span class="no">preparePhenotypeData</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span>()</pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">d</span>,<span class="va">preparePhenotypeData</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>As shown below, this provides a tibble containing 36 phenotypic descriptors for the 40 trees across the two sites.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">p</span>)
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 40 x 36</span>
 <span class="co">#&gt;    Location    ID `Agrilus exit h… `Branch epicorm… `Crown contact …</span>
 <span class="co">#&gt;    &lt;chr&gt;    &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;                       &lt;dbl&gt;</span>
@@ -157,7 +166,7 @@
 <span class="co">#&gt; #   (m)` &lt;dbl&gt;, `Tree No` &lt;chr&gt;, `Dead stem tissue` &lt;chr&gt;, `Crown radius</span>
 <span class="co">#&gt; #   (m)` &lt;dbl&gt;, `Canopy closure` &lt;chr&gt;, `Active bleeds` &lt;dbl&gt;, `Black</span>
 <span class="co">#&gt; #   staining` &lt;dbl&gt;, `Calloused wound` &lt;dbl&gt;, `Active bleed length (mm)` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `Black staining length (mm)` &lt;dbl&gt;, `Calloused wound length (mm)` &lt;dbl&gt;</span></pre></body></html></div>
+<span class="co">#&gt; #   `Black staining length (mm)` &lt;dbl&gt;, `Calloused wound length (mm)` &lt;dbl&gt;</span></code></pre></div>
 </div>
 <div id="tree-size-descriptor-adjustment" class="section level3">
 <h3 class="hasAnchor">
@@ -172,20 +181,24 @@
 <li>Crown radius (m)</li>
 </ul>
 <p>As can be seen in the plot below, there is a difference in the diameter at breast height between the sites; Site 2 having trees with greater diameter than Site 1.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">p</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">Location</span>,<span class="kw">y</span> <span class="kw">=</span> <span class="no">`Diameter at breast height (m)`</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</pre></body></html></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">p</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Location</span>,y <span class="op">=</span> <span class="va">`Diameter at breast height (m)`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="pdi-example_files/figure-html/DBH_site_plot-1.png" width="700" style="display: block; margin: auto;"></p>
 <p>The adjustment to the tree size descriptors can be applied using the following. For each descriptor, this will adjust the site means to the overall mean, removing inter-site variance while maintaining intra-site variance.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">sa</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/siteAdjustment.html">siteAdjustment</a></span>(<span class="no">p</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/siteAdjustment.html">siteAdjustment</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></code></pre></div>
 <p>The plot below shows the effect of the adjustment of the diameter at breast height with the difference between the sites removed.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">sa</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">Location</span>,<span class="kw">y</span> <span class="kw">=</span> <span class="no">`Diameter at breast height (m)`</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</pre></body></html></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">sa</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Location</span>,y <span class="op">=</span> <span class="va">`Diameter at breast height (m)`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="pdi-example_files/figure-html/DBH_site_adjusted_plot-1.png" width="700" style="display: block; margin: auto;"></p>
 <p>The adjustment factors for each descriptor at each site can be returned using the following:</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">sa_factors</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/siteAdjustmentFactors.html">siteAdjustmentFactors</a></span>(<span class="no">p</span>)
-<span class="no">sa_factors</span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sa_factors</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/siteAdjustmentFactors.html">siteAdjustmentFactors</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span>
+<span class="va">sa_factors</span>
 <span class="co">#&gt; # A tibble: 10 x 4</span>
 <span class="co">#&gt;    Descriptor                    Location   Mean Adjustment</span>
 <span class="co">#&gt;    &lt;chr&gt;                         &lt;chr&gt;     &lt;dbl&gt;      &lt;dbl&gt;</span>
@@ -198,7 +211,7 @@
 <span class="co">#&gt;  7 Timber height (m)             Site 1    8.04      -2.14 </span>
 <span class="co">#&gt;  8 Timber height (m)             Site 2   12.3        2.14 </span>
 <span class="co">#&gt;  9 Total height (m)              Site 1   19.2       -0.805</span>
-<span class="co">#&gt; 10 Total height (m)              Site 2   20.8        0.805</span></pre></body></html></div>
+<span class="co">#&gt; 10 Total height (m)              Site 2   20.8        0.805</span></code></pre></div>
 </div>
 <div id="additional-descriptors-calculation" class="section level3">
 <h3 class="hasAnchor">
@@ -218,70 +231,78 @@
 <code>agrilusExitHoleDensity</code> - Agrilus exit hole density (m<sup>-2</sup>)</li>
 </ul>
 <p>These descriptors can be calculated for the example data using:</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">a</span> <span class="kw">&lt;-</span> <span class="no">sa</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">`Live crown ratio (%)`</span> <span class="kw">=</span> <span class="fu"><a href="../reference/liveCrownRatio.html">liveCrownRatio</a></span>(<span class="no">`Total height (m)`</span>,
-                                                 <span class="no">`Lower crown height (m)`</span>),
-         <span class="kw">`Crown condition (%)`</span> <span class="kw">=</span> <span class="fu"><a href="../reference/crownCondition.html">crownCondition</a></span>(<span class="no">`Missing crown (%)`</span>,
-                                                <span class="no">`Crown transparency (%)`</span>),
-         <span class="kw">`Crown volume (m^3)`</span> <span class="kw">=</span> <span class="fu"><a href="../reference/crownVolume.html">crownVolume</a></span>(<span class="no">`Crown radius (m)`</span>,
-                                            <span class="no">`Total height (m)`</span>,
-                                            <span class="no">`Lower crown height (m)`</span>,
-                                            <span class="no">`Crown condition (%)`</span>),
-         <span class="kw">`Bleed prevalence (%)`</span> <span class="kw">=</span> <span class="fu"><a href="../reference/bleedPrevalence.html">bleedPrevalence</a></span>(<span class="no">`Active bleed length (mm)`</span>,
-                                                  <span class="no">`Active bleeds`</span>,
-                                                  <span class="no">`Black staining length (mm)`</span>,
-                                                  <span class="no">`Black staining`</span>,
-                                                  <span class="no">`Diameter at breast height (m)`</span>),
-         <span class="kw">`Agrilus exit hole density (m^-2)`</span> <span class="kw">=</span> <span class="fu"><a href="../reference/agrilusExitHoleDensity.html">agrilusExitHoleDensity</a></span>(<span class="no">`Agrilus exit holes`</span>,
-                                                                     <span class="no">`Diameter at breast height (m)`</span>)
-  )</pre></body></html></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">a</span> <span class="op">&lt;-</span> <span class="va">sa</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`Live crown ratio (%)` <span class="op">=</span> <span class="fu"><a href="../reference/liveCrownRatio.html">liveCrownRatio</a></span><span class="op">(</span><span class="va">`Total height (m)`</span>,
+                                                 <span class="va">`Lower crown height (m)`</span><span class="op">)</span>,
+         `Crown condition (%)` <span class="op">=</span> <span class="fu"><a href="../reference/crownCondition.html">crownCondition</a></span><span class="op">(</span><span class="va">`Missing crown (%)`</span>,
+                                                <span class="va">`Crown transparency (%)`</span><span class="op">)</span>,
+         `Crown volume (m^3)` <span class="op">=</span> <span class="fu"><a href="../reference/crownVolume.html">crownVolume</a></span><span class="op">(</span><span class="va">`Crown radius (m)`</span>,
+                                            <span class="va">`Total height (m)`</span>,
+                                            <span class="va">`Lower crown height (m)`</span>,
+                                            <span class="va">`Crown condition (%)`</span><span class="op">)</span>,
+         `Bleed prevalence (%)` <span class="op">=</span> <span class="fu"><a href="../reference/bleedPrevalence.html">bleedPrevalence</a></span><span class="op">(</span><span class="va">`Active bleed length (mm)`</span>,
+                                                  <span class="va">`Active bleeds`</span>,
+                                                  <span class="va">`Black staining length (mm)`</span>,
+                                                  <span class="va">`Black staining`</span>,
+                                                  <span class="va">`Diameter at breast height (m)`</span><span class="op">)</span>,
+         `Agrilus exit hole density (m^-2)` <span class="op">=</span> <span class="fu"><a href="../reference/agrilusExitHoleDensity.html">agrilusExitHoleDensity</a></span><span class="op">(</span><span class="va">`Agrilus exit holes`</span>,
+                                                                     <span class="va">`Diameter at breast height (m)`</span><span class="op">)</span>
+  <span class="op">)</span></code></pre></div>
 </div>
 <div id="random-forest-model-fitting" class="section level3">
 <h3 class="hasAnchor">
 <a href="#random-forest-model-fitting" class="anchor"></a>Random forest model fitting</h3>
 <p>Prior to index calculation, random forest models need to be fitted to the data, from which the indexes are calculated.</p>
 <p>The data first needs to be prepared for random forest analysis:</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">t</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/makeAnalysisTable.html">makeAnalysisTable</a></span>(<span class="no">a</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">t</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/makeAnalysisTable.html">makeAnalysisTable</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></code></pre></div>
 <p>Then random forest can then be performed using:</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">m</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/rf.html">rf</a></span>(<span class="no">t</span>,<span class="kw">cls</span> <span class="kw">=</span> <span class="kw">NULL</span>,<span class="kw">nreps</span> <span class="kw">=</span> <span class="fl">10</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rf.html">rf</a></span><span class="op">(</span><span class="va">t</span>,cls <span class="op">=</span> <span class="cn">NULL</span>,nreps <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
 <p>Here we are using unsupervised analysis (<code>cls = NULL</code>) as this data provides clear differentiation in decline status (see Index calculation section). A supervised analysis could instead be used for data sets where this distinction is not so clear and unsupervised methods are not appropriate.</p>
 </div>
 <div id="index-calculation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#index-calculation" class="anchor"></a>Index calculation</h3>
 <p>The following will calculate the decline indexes based on the proximity values calculated from the random forest models generated in the section above.</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">DIs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/calcDIs.html">calcDIs</a></span>(<span class="no">m</span>,<span class="kw">DAI</span> <span class="kw">=</span> <span class="fl">FALSE</span>,<span class="kw">invertPDI</span> <span class="kw">=</span> <span class="fl">FALSE</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span>(<span class="no">a</span> <span class="kw">%&gt;%</span>
-              <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">Location</span>,<span class="no">ID</span>,<span class="no">Status</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">DIs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcDIs.html">calcDIs</a></span><span class="op">(</span><span class="va">m</span>,DAI <span class="op">=</span> <span class="cn">FALSE</span>,invertPDI <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span><span class="op">(</span><span class="va">a</span> <span class="op">%&gt;%</span>
+              <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Location</span>,<span class="va">ID</span>,<span class="va">Status</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Here, only the PDI is calculated due to the low number of observations in the example data set. We have also chosen not to invert the calculated PDI index scale in this example. In other cases, inversion may be required to ensure the scale is orientated correctly.</p>
 <p>The box plots of the calculated indexes are shown below. It can be seen that the decline statuses are clearly differentiated at Site 1 and less so at Site 2 with symptomatic trees having PDI values closer to 1.</p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">DIs</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">Status</span>,<span class="kw">y</span> <span class="kw">=</span> <span class="no">PDI</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(~<span class="no">Location</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">DIs</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Status</span>,y <span class="op">=</span> <span class="va">PDI</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Location</span><span class="op">)</span></code></pre></div>
 <p><img src="pdi-example_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div id="descriptor-contributions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#descriptor-contributions" class="anchor"></a>Descriptor contributions</h3>
 <p>Now the decline indexes have been calculated, we next need to understand the relative contributions of the descriptors to the indexes. These can be calculated using the mean decrease in accuracy variable importance metric from the fitted random forest models. These importance scores can be retrieved using the following:</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="no">descriptor_contributions</span> <span class="kw">&lt;-</span> <span class="no">m</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/descriptorContributions.html">descriptorContributions</a></span>()</pre></body></html></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">descriptor_contributions</span> <span class="op">&lt;-</span> <span class="va">m</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/descriptorContributions.html">descriptorContributions</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>The relative descriptor contributions can then be plotted using the following code, with the higher contributing descriptors at the top of the y-axis.</p>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">descriptor_contributions</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="no">MeanDecreaseAccuracy</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">Descriptor</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="no">Descriptor</span>,<span class="kw">levels</span> <span class="kw">=</span> <span class="no">Descriptor</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">MeanDecreaseAccuracy</span>,<span class="kw">y</span> <span class="kw">=</span> <span class="no">Descriptor</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</pre></body></html></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">descriptor_contributions</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">MeanDecreaseAccuracy</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Descriptor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">Descriptor</span>,levels <span class="op">=</span> <span class="va">Descriptor</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">MeanDecreaseAccuracy</span>,y <span class="op">=</span> <span class="va">Descriptor</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="pdi-example_files/figure-html/contributions_plot-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>As can be seen in the plot above, the crown volume descriptor was ranked highest and therefore contributed most to the calculated decline indexes. The plot blow shows crown volume plotted against the calculated PDI values for each tree. It can be seen that the trees with lower PDI values (healthier) also have greater crown volumes which is what would be expected.</p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">DIs</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span>(<span class="no">a</span> <span class="kw">%&gt;%</span>
-              <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">`Crown volume (m^3)`</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">PDI</span>,<span class="kw">y</span> <span class="kw">=</span> <span class="no">`Crown volume (m^3)`</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</pre></body></html></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">DIs</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span><span class="op">(</span><span class="va">a</span> <span class="op">%&gt;%</span>
+              <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">`Crown volume (m^3)`</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">PDI</span>,y <span class="op">=</span> <span class="va">`Crown volume (m^3)`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="pdi-example_files/figure-html/crown_volume_plot-1.png" width="700" style="display: block; margin: auto;"></p>
 <p>It is important at this stage to carefully assess the descriptor contributions to, and associations with, the calculated decline indexes to ensure they suitably describe the decline syndromes on which they are based. Where this has not been achieved, solutions could include using supervised random forest models instead of the unsupervised approach used here or the addition/removal of phenotypic descriptors from the models.</p>
 </div>
@@ -289,12 +310,12 @@
 <div id="references" class="section level2 unnumbered">
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
-<div id="refs" class="references">
-<div id="ref-denman2014">
-<p>Denman, Sandra, Nathan Brown, Susan Kirk, Mike Jeger, and Joan Webber. 2014. “A Description of the Symptoms of Acute Oak Decline in Britain and a Comparative Review on Causes of Similar Disorders on Oak in Europe.” <em>Forestry: An International Journal of Forest Research</em> 87 (4): 535–51.</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-denman2014" class="csl-entry">
+Denman, Sandra, Nathan Brown, Susan Kirk, Mike Jeger, and Joan Webber. 2014. <span>“A Description of the Symptoms of Acute Oak Decline in Britain and a Comparative Review on Causes of Similar Disorders on Oak in Europe.”</span> <em>Forestry: An International Journal of Forest Research</em> 87 (4): 535–51.
 </div>
-<div id="ref-denman2009">
-<p>Denman, Sandra, and Joan Webber. 2009. “Oak Declines: New Definitions and New Episodes in Britain.” <em>Quarterly Journal of Forestry</em> 103 (4): 285–90.</p>
+<div id="ref-denman2009" class="csl-entry">
+Denman, Sandra, and Joan Webber. 2009. <span>“Oak Declines: New Definitions and New Episodes in Britain.”</span> <em>Quarterly Journal of Forestry</em> 103 (4): 285–90.
 </div>
 </div>
 </div>
@@ -315,7 +336,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
