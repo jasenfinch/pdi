@@ -19,7 +19,7 @@ This package provides the tools generate these decline indexes using machine lea
 
 The methodology is outlined in the article:
 
-[Finch, J.P., Brown, N., Beckmann, M., Denman, S. and Draper, J., 2021. Index measures for oak decline severity using phenotypic descriptors. Forest Ecology and Management, 485, p.118948.](https://www.sciencedirect.com/science/article/pii/S0378112721000372)
+[Finch, J.P., Brown, N., Beckmann, M., Denman, S. and Draper, J., 2021. Index measures for oak decline severity using phenotypic descriptors. Forest Ecology and Management, 485, p.118948.](https://doi.org/10.1016/j.foreco.2021.118948)
 
 ### Installation
 
