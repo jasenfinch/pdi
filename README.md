@@ -17,14 +17,30 @@ Two oak decline indexes have been developed to quantitatively describe and diffe
 
 This package provides the tools generate these decline indexes using machine learning algorithm random forest.
 
-Install the package from GitHub:
+The methodology is outlined in the article:
 
+[Finch, J.P., Brown, N., Beckmann, M., Denman, S. and Draper, J., 2021. Index measures for oak decline severity using phenotypic descriptors. Forest Ecology and Management, 485, p.118948.](https://www.sciencedirect.com/science/article/pii/S0378112721000372)
+
+### Installation
+
+The package can be installed from CRAN using:
+
+``` r
+install.packages('pdi')
 ```
+
+Or this development version of the package can be installed from GitHub:
+
+``` r
 devtools::install_github('jasenfinch/pdi',build_vignettes = TRUE)
 ```
 
-See the vignette for how to generate a phenotypic decline index (PDI) for oak decline severity using example data:
+### Learn more
 
-```
-vignette('pdi-example',package = 'pdi')
-```
+The package documentation can be browsed online at <https://jasenfinch.github.io/pdi/>. 
+
+If this is your first time using `pdi` see the [Generating phenotypic decline indexes using the pdi package](https://jasenfinch.github.io/pdi/articles/pdi-example.html) vignette for information on how to get started.
+
+If you believe you've found a bug in `pdi`, please file a bug (and, if
+possible, a [reproducible example](https://reprex.tidyverse.org)) at
+<https://github.com/jasenfinch/pdi/issues>.
