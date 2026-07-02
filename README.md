@@ -1,10 +1,12 @@
 # pdi
 
-[![R build status](https://github.com/jasenfinch/pdi/workflows/R-CMD-check/badge.svg)](https://github.com/jasenfinch/pdi/actions)
-[![Codecov test coverage](https://codecov.io/gh/jasenfinch/pdi/branch/master/graph/badge.svg)](https://codecov.io/gh/jasenfinch/pdi?branch=master)
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/jasenfinch/pdi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jasenfinch/pdi/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/jasenfinch/pdi/graph/badge.svg)](https://app.codecov.io/gh/jasenfinch/pdi)
 [![CRAN status](https://www.r-pkg.org/badges/version/pdi)](https://CRAN.R-project.org/package=pdi)
 [![downloads](https://cranlogs.r-pkg.org/badges/pdi)](https://cran.r-project.org/package=pdi)
 [![DOI](https://zenodo.org/badge/201299021.svg)](https://zenodo.org/badge/latestdoi/201299021)
+<!-- badges: end -->
 
 > **Phenotypic index measures for oak decline severity**
 
