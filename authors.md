@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/jasenfinch/pdi/blob/master/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/jasenfinch/pdi/blob/v0.4.3/DESCRIPTION)
 
 Finch J (2026). *pdi: Phenotypic Index Measures for Oak Decline
 Severity*. R package version 0.4.3, <https://jasenfinch.github.io/pdi/>.
