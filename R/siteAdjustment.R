@@ -2,51 +2,59 @@
 #' @description Perform a site adjustment of selected descriptors.
 #' @param phenoData phenoData tibble containing phenotype data
 #' @param descriptors columns of phenoData on which to perform site correction
-#' @examples 
+#' @examples
 #' library(dplyr)
-#' 
+#'
 #' ## Retrieve file paths for example data
-#' files <- list.files(system.file('phenotypeDataCollectionSheets',
-#'   package = 'pdi'),full.names = TRUE)
-#' 
+#' files <- list.files(system.file("phenotypeDataCollectionSheets",
+#'   package = "pdi"
+#' ), full.names = TRUE)
+#'
 #' ## Prepare data
-#' d <- map(files,readPhenotypeSheet) %>%
+#' d <- map(files, readPhenotypeSheet) %>%
 #'   map(preparePhenotypeData) %>%
 #'   bind_rows() %>%
-#'   siteAdjustment() 
+#'   siteAdjustment()
+#' @importFrom tidyselect all_of
 #' @export
 
-siteAdjustment <- function(phenoData,descriptors = c("Diameter at breast height (m)",
-                                                     "Lower crown height (m)",
-                                                     "Timber height (m)",
-                                                     "Total height (m)",
-                                                     "Crown radius (m)")){
+siteAdjustment <- function(phenoData, descriptors = c(
+                             "Diameter at breast height (m)",
+                             "Lower crown height (m)",
+                             "Timber height (m)",
+                             "Total height (m)",
+                             "Crown radius (m)"
+                           )) {
   siteCorrect <- phenoData %>%
-    select(Location,ID,descriptors) %>%
-    gather('Descriptor','Value',-Location,-ID)
-  
-  siteCorrections <- siteAdjustmentFactors(phenoData,descriptors)
-  
+    select(Location, ID, all_of(descriptors)) %>%
+    gather("Descriptor", "Value", -Location, -ID)
+
+  siteCorrections <- siteAdjustmentFactors(phenoData, descriptors)
+
   siteCorrect <- siteCorrect %>%
     split(.$Descriptor) %>%
-    map(~{
+    map(~ {
       d <- .
       d %>%
         split(.$Location) %>%
-        map(~{
+        map(~ {
           d <- .
           d %>%
-            mutate(Value = Value - { siteCorrections %>%
-                filter(Descriptor == d$Descriptor[1],Location == d$Location[1]) %>% .$Adjustment})
+            mutate(Value = Value - {
+              siteCorrections %>%
+                filter(Descriptor == d$Descriptor[1], Location == d$Location[1]) %>%
+                .$Adjustment
+            })
         }) %>%
         bind_rows()
     }) %>%
     bind_rows() %>%
-    spread(Descriptor,Value)
-  
+    spread(Descriptor, Value)
+
   correctedPhenoData <- phenoData %>%
-    select(-descriptors) %>%
-    left_join(siteCorrect,by = c("Location", "ID"))
-  
+    select(-all_of(descriptors)) %>%
+    left_join(siteCorrect, by = c("Location", "ID"))
+
   return(correctedPhenoData)
 }
+
