@@ -1,1 +1,4 @@
 url: https://jasenfinch.github.io/pdi/
+template:
+  bootstrap: 5
+
