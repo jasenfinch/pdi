@@ -8,3 +8,7 @@ LICENSE
 ^docs$
 ^pkgdown$
 ^\.github$
+^\.direnv$
+^flake.*$
+^.envrc$
+^justfile$
